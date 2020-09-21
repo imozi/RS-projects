@@ -13,74 +13,168 @@
 </head>
 
 <body>
+  <div class="wrapper-bg-black">
+    <div class="wrapper-bg-img container">
+
+      <header class="header">
+        <h1 class="visually-hidden">WebDev</h1>
+        <nav class="header__nav main-nav">
+          <ul class="main-nav__list">
+            <li>
+              <a href="#" class="active-link">About</a>
+            </li>
+            <li>
+              <a href="#">Syllabus</a>
+            </li>
+            <li>
+              <a href="#" aria-label="Go to home">
+                <svg width="44" height="45" fill="#ffffff" aria-label="WebDev logo">
+                  <use xlink:href="assets/sprite-svg.svg#logo"></use>
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a href="#">Projects</a>
+            </li>
+            <li>
+              <a href="#">FAQ</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <section class="your-life">
+        <h2>Your life is WebDev</h2>
+        <p>Whatever the approach to development may be, the final program must satisfy some fundamental properties</p>
+        <a href="#" class="btn">Get started</a>
+      </section>
+
+      <ul class="social-link">
+        <li>
+          <a href="#" aria-label="Our mail">
+            <svg width="20" height="20" fill="#ffffff" aria-label="icon mail">
+              <use xlink:href="assets/sprite-svg.svg#icon-mail"></use>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="We are on facebook">
+            <svg width="20" height="20" fill="#ffffff" aria-label="icon facebook">
+              <use xlink:href="assets/sprite-svg.svg#icon-facebook"></use>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="We are on instagram">
+            <svg width="20" height="20" fill="#ffffff" aria-label="icon instagram">
+              <use xlink:href="assets/sprite-svg.svg#icon-insta"></use>
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href="#" aria-label="we are on telegram">
+            <svg width="20" height="20" fill="#ffffff" aria-label="icon telegram">
+              <use xlink:href="assets/sprite-svg.svg#icon-telegram"></use>
+            </svg>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <main class="main">
+
+    <section class="rappresent content">
+      <div class="rappresent__col-left">
+        <h2>Rappresent your idea with a&nbsp;smart Design</h2>
+        <p>Tasks accompanying and related to programming include: testing, debugging, source code maintenance,
+          <strong>implementation of
+            build systems</strong>, and management of derived artifacts, such as the machine code of computer programs.
+        </p>
+        <a href="#" class="btn">Get started</a>
+      </div>
+
+      <div class="rappresent__col-right">
+        <img src="assets/section1-img.jpg" width="407" height="582" alt="Rappresent your idea">
+      </div>
+    </section>
+
+    <section class="our-community">
+      <div class="our-community__content container">
+        <div class="our-community__col-left">
+          <img src="assets/user-photo.png" width="45" height="45" alt="user photo">
+          <h2>Our community</h2>
+          <p>A hacker is any skilled computer expert that uses their technical knowledge to overcome a problem, but it
+            can also mean
+            a security hacker in common language</p>
+        </div>
+        <div class="our-community__col-right">
+          <div class="slider">
+            <div class="slider__pagination">
+              <button class="slider__pagination-btn slider__pagination-prev" aria-label="prev slide"></button>
+              <span class="slider__pagination-current">1</span>
+              <span class="slider__pagination-separator">/</span>
+              <span class="slider__pagination-total">5</span>
+              <button class="slider__pagination-btn slider__pagination-next" aria-label="next slide"></button>
+            </div>
+            <div class="slider__wrapper">
+              <div class="slider__slide">
+                <img src="assets/slider-item1.jpg" alt="programming">
+              </div>
+              <div class="slider__slide">
+                <img src="assets/slider-item2.jpg" alt="remote work">
+              </div>
+              <div class="slider__slide">
+                <img src="assets/slider-item3.jpg" alt="programming">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="implement content">
+      <div class="implement__col-left">
+        <img src="assets/section3-img.jpg" width="407" height="582" alt="Rappresent your idea">
+      </div>
+      <div class="implement__col-right">
+        <h2>Implement right Code</h2>
+        <p>These might be considered part of the <strong>programming process</strong>, but often the term software
+          development is used for this
+          larger process with the term programming, implementation
+        </p>
+        <a href="#" class="btn">Learn more</a>
+      </div>
+    </section>
+
     <div class="wrapper-bg-black">
       <div class="wrapper-bg-img container">
-    
-        <header class="header">
-          <h1 class="visually-hidden">WebDev</h1>
-          <nav class="header__nav main-nav">
-            <ul class="main-nav__list">
-              <li>
-                <a href="#" class="active-link">About</a>
-              </li>
-              <li>
-                <a href="#">Syllabus</a>
-              </li>
-              <li>
-                <a href="#" aria-label="Go to home">
-                  <svg width="44" height="45" fill="#ffffff" aria-label="WebDev logo">
-                    <use xlink:href="assets/sprite-svg.svg#logo"></use>
-                  </svg>
-                </a>
-              </li>
-              <li>
-                <a href="#">Projects</a>
-              </li>
-              <li>
-                <a href="#">FAQ</a></li>
-            </ul>
-          </nav>
-        </header>
-    
-        <section class="your-life">
-          <h2>Your life is WebDev</h2>
-          <p>Whatever the approach to development may be, the final program must satisfy some fundamental properties</p>
-          <a href="#" class="btn">Get started</a>
+        <section class="sign-up">
+          <h2>Sign up for our newsletter</h2>
+          <form action="#" method="POST" class="sign-up__form">
+            <label for="email" class="visually-hidden">E-mail</label>
+            <input type="email" name="email" id="email" placeholder="E-mail">
+            <button type="submit" aria-label="sign-up"></button>
+          </form>
         </section>
-    
-        <ul class="social-link">
-          <li>
-            <a href="#" aria-label="Our mail">
-              <svg width="20" height="20" fill="#ffffff" aria-label="icon mail">
-                <use xlink:href="assets/sprite-svg.svg#icon-mail"></use>
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" aria-label="We are on facebook">
-              <svg width="20" height="20" fill="#ffffff" aria-label="icon facebook">
-                <use xlink:href="assets/sprite-svg.svg#icon-facebook"></use>
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" aria-label="We are on instagram">
-              <svg width="20" height="20" fill="#ffffff" aria-label="icon instagram">
-                <use xlink:href="assets/sprite-svg.svg#icon-insta"></use>
-              </svg>
-            </a>
-          </li>
-          <li>
-            <a href="#" aria-label="we are on telegram">
-              <svg width="20" height="20" fill="#ffffff" aria-label="icon telegram">
-                <use xlink:href="assets/sprite-svg.svg#icon-telegram"></use>
-              </svg>
-            </a>
-          </li>
-        </ul>
-    
       </div>
     </div>
+
+    <section class="download">
+      <div class="download__content container">
+        <h2>Download the App</h2>
+        <p>Machine code was the language of early programs, written in the instruction set of the particular machine,
+          often in
+          binary notation.</p>
+        <div class="download__link">
+          <a href="#" class="download__link-apple"><span>Apple store</span><span></span></a>
+          <a href="#" class="download__link-android"><span>Play Market</span><span></span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
 </body>
 
 </html>
