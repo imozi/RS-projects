@@ -37,5 +37,156 @@ h4 {
 .container {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 80px 20px 100px;
+  padding: 80px 15px 100px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 45px;
+  font-family: "Georgia", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 22px;
+  color: #292929;
+  letter-spacing: 0.06em;
+  border-radius: 100px;
+  transition: 0.2s linear;
+}
+
+.btn--primary {
+  background-color: #f1cdb3;
+}
+
+.btn--primary:hover,
+.btn--primary:focus {
+  background-color: #fddcc4;
+}
+
+
+.btn--secondary {
+  border: 2px solid #f1cdb3;
+  background-color: transparent;
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus {
+  background-color: #fddcc4;
+  border: 2px solid transparent;
+}
+
+.wrapper-top {
+  background: url("../../../assets/images/noise_transparent.png"),
+    radial-gradient(100% 215.42% at 0% 0%, #5b483a 0%, #262425 100%), #211f20;
+}
+
+.wrapper-top__container.container {
+  padding-top: 60px;
+  padding-bottom: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
+}
+
+.header__logo {
+  margin-left: 12px;
+  margin-top: 1px;
+}
+
+.logo h1 {
+  margin: 0;
+  margin-bottom: 9px;
+  color: #f1cdb3;
+  font-weight: normal;
+  font-size: 32px;
+  line-height: 35px;
+}
+
+.logo p {
+  margin: 0;
+  padding-left: 5px;
+  color: #ffffff;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 15px;
+  letter-spacing: 0.1em;
+}
+
+.header__main-nav {
+  margin-top: -2px;
+  margin-left: auto;
+}
+
+.main-nav__list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-nav__list li {
+  margin-right: 35px;
+}
+
+.main-nav__list li:last-of-type {
+  margin-right: 0;
+}
+
+.main-nav__link {
+  color: #cdcdcd;
+  transition: 0.2s linear;
+}
+
+.main-nav__link:hover:not(.main-nav__link--active),
+.main-nav__link:focus:not(.main-nav__link--active) {
+  color: #fafafa;
+}
+
+.main-nav__link--active {
+  position: relative;
+  color: #fafafa;
+}
+
+.main-nav__link--active::after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 3px;
+  left: 0;
+  bottom: -5px;
+  background-color: #f1cdb3;
+}
+
+.not-only {
+  display: flex;
+}
+
+.not-only__description {
+  padding-top: 164px;
+  padding-left: 13px;
+}
+
+.not-only__description h2 {
+  margin: 0;
+  margin-bottom: 42px;
+  padding-right: 70px;
+  font-size: 44px;
+  font-weight: 400;
+  line-height: 57px;
+  color: #ffffff;
+  letter-spacing: normal;
+}
+
+.not-only__description p {
+  margin: 0;
+  margin-bottom: 40px;
+  padding-right: 25px;
+  color: #ffffff;
+}
+
+.not-only__img img {
+  display: block;
 }
