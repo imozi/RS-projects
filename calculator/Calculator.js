@@ -17,6 +17,23 @@ class Calculator {
     this.currentOperand = this.currentOperand.toString().slice(0, -1);
   }
 
+  plusMinus() {
+    if (this.currentOperand === "") return;
+
+    this.currentOperand.startsWith("-")
+      ? (this.currentOperand = this.currentOperand.slice(1))
+      : (this.currentOperand = `-${this.currentOperand}`);
+  }
+
+  squareRoot() {
+    this.currentOperand < 0
+      ? (this.resultation = "Error!")
+      : (this.resultation = Number(Math.sqrt(this.currentOperand).toFixed(7)));
+    this.currentOperand = "";
+    this.previousOperand = "";
+    this.operation = null;
+  }
+
   setOperation(operation) {
     if (this.previousOperand !== "" && this.operation !== operation) {
       this.operation = operation;
@@ -82,6 +99,9 @@ class Calculator {
         break;
       case "÷":
         computation = prevOperand / currOperand;
+        break;
+      case "xⁿ":
+        computation = Math.pow(prevOperand, currOperand);
         break;
       default:
         return;
