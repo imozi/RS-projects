@@ -261,7 +261,8 @@ h4 {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  transform: translate3d(0, 0, 0);
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
 }
 
 .slider__wrapper {
@@ -277,7 +278,8 @@ h4 {
   justify-content: space-between;
   width: 100%;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   z-index: -1;
 }
 
@@ -378,6 +380,7 @@ h4 {
   justify-content: center;
   margin: 0;
   margin-left: 15px;
+  margin-bottom: 55px;
   padding: 0;
   max-width: 1030px;
   list-style: none;
@@ -385,7 +388,6 @@ h4 {
 
 .help__list li {
   margin-right: 120px;
-  margin-bottom: 55px;
   font-family: "Georgia", "Arial", "Helvetica", sans-serif;
   font-size: 20px;
   line-height: 23px;
@@ -393,11 +395,7 @@ h4 {
   text-align: center;
 }
 
-.help__list li:nth-of-type(5n) {
-  margin-right: 0;
-}
-
-.help__list li:nth-of-type(9n) {
+.help__list li:last-of-type {
   margin-right: 0;
 }
 
@@ -472,6 +470,12 @@ h4 {
   color: #545454;
   background: #f1cdb3;
   border-radius: 9px;
+  transition: 0.2s linear;
+}
+
+.in-addition__description a:hover,
+.in-addition__description a:focus {
+  background-color: #fddcc4;
 }
 
 .in-addition__description a::before {
@@ -481,7 +485,8 @@ h4 {
   height: 23px;
   top: 50%;
   left: 15px;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
   background-image: url("../../../assets/icons/credit-card.svg");
   background-repeat: no-repeat;
 }
@@ -532,13 +537,22 @@ h4 {
 .footer__contacts a,
 .footer__location a {
   position: relative;
-  display: block;
+  display: inline-block;
+  align-self: flex-start;
   padding-left: 60px;
   font-family: "Georgia", "Arial", "Helvetica", sans-serif;
   font-size: 20px;
   line-height: 23px;
   letter-spacing: 0.06em;
   color: #f1cdb3;
+  transition: 0.2s linear;
+}
+
+.footer__contacts a:hover,
+.footer__contacts a:focus,
+.footer__location a:hover,
+.footer__location a:focus {
+  color: #fddcc4;
 }
 
 .footer__contacts a:first-of-type {
@@ -582,7 +596,7 @@ h4 {
 }
 
 .footer__location a::before {
-    position: absolute;
+  position: absolute;
   content: "";
   width: 22px;
   height: 32px;
@@ -590,7 +604,8 @@ h4 {
   left: 0;
   background-image: url("../../../assets/icons/pin.svg");
   background-repeat: no-repeat;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 .footer__location a:first-of-type {
