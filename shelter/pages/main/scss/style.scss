@@ -1,0 +1,21 @@
+@import "./vendor/normalize.scss";
+@import "./global/variables.scss";
+@import "./mixins/mixins.scss";
+@import "./global/global.scss";
+
+
+
+//components
+@import "./components/container.scss";
+@import "./components/button.scss";
+@import "./components/header.scss";
+@import "./components/logo.scss";
+@import "./components/main-nav.scss";
+@import "./components/not-only.scss";
+@import "./components/about.scss";
+@import "./components/our-friends.scss";
+@import "./components/slider.scss";
+@import "./components/animal-card.scss";
+@import "./components/help.scss";
+@import "./components/in-addition.scss";
+@import "./components/footer.scss";

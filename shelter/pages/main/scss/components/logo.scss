@@ -1,0 +1,21 @@
+.logo {
+  & h1 {
+    margin: 0;
+    margin-bottom: 0.5625rem;
+    color: #f1cdb3;
+    font-weight: normal;
+    @include font-size-rem(32);
+    line-height: 110%;
+    @include letter-spacing-rem(2, 0.06)
+  }
+
+  & p {
+    margin: 0;
+    padding-left: 0.3125rem;
+    color: #ffffff;
+    font-weight: normal;
+    @include font-size-rem(13);
+    line-height: 15px;
+    @include letter-spacing-rem(0.813, 0.1);
+  }
+}

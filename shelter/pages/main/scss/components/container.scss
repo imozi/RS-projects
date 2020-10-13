@@ -1,0 +1,14 @@
+.container {
+  min-width: $breakpoint-mobile;
+  margin: 0 auto;
+  padding: 2.625rem 0.625rem;
+
+  @include tablet {
+    padding: 5rem 1.875rem 6.25rem;
+  }
+
+  @include desktop {
+    max-width: 1280px;
+    padding: 5rem 2.5rem 6.25rem;
+  }
+}

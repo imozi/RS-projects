@@ -1,0 +1,84 @@
+.not-only {
+  background: $gradient-main;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &.container {
+      padding-top: 9.375rem;
+      padding-bottom: 0;
+
+      @include desktop {
+        padding-top: 11.25rem;
+      }
+    }
+
+    @include desktop {
+      flex-direction: row;
+      align-items: stretch;
+    }
+  }
+
+  &__description {
+    text-align: center;
+    margin-bottom: 6.563rem;
+
+    & h2 {
+      margin: 0;
+      margin-bottom: 2.625rem;
+      padding: 0 1.25rem;
+      color: $secont-font-h-color;
+
+      @include tablet {
+        padding: 0;
+        padding-right: 1.25rem;
+        @include font-size-rem(44);
+        letter-spacing: 0;
+        text-align: left;
+      }
+    }
+
+    & p {
+      margin: 0;
+      margin-bottom: 2.625rem;
+      color: $secont-fonts-color;
+
+      @include tablet {
+       text-align: left;
+      }
+    }
+
+    @include tablet {
+      max-width: 460px;
+      margin-bottom: 6.25rem;
+    }
+
+    @include desktop {
+      margin-top: 10.188rem;
+      margin-right: 2.688rem;
+      margin-bottom: 0;
+      text-align: left;
+    }
+  }
+
+  &__img {
+    max-width: 569px;
+    padding-left: 2.5rem;
+
+    @include tablet {
+      padding: 0;
+      margin-left: 8.75rem;
+    }
+
+    @include desktop {
+      max-width: 100%;
+      margin: 0;
+    }
+
+    & img {
+      display: block;
+    }
+  }
+}

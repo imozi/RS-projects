@@ -1,0 +1,129 @@
+.in-addition {
+  background-color: $section-background;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+
+    @include desktop {
+      flex-direction: row;
+      align-items: stretch;
+    }
+  }
+
+  &__img {
+    padding: 1.25rem;
+    padding-bottom: 0;
+
+    & img {
+      display: block;
+    }
+
+    @include desktop {
+      padding: 0;
+      margin-left: 8.938rem;
+      margin-right: 1.875rem;
+      margin-top: 0.688rem;
+    }
+  }
+
+  &__description {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 380px;
+    margin-bottom: 1.438rem;
+
+    & h2 {
+      margin: 0;
+      margin-bottom: 1.25rem;
+      padding: 0 2.5rem;
+      text-align: center;
+
+      @include tablet {
+        padding: 0;
+        padding-right: 3.75rem;
+        text-align: left;
+        margin-top: 0.125rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    & p {
+      margin: 0;
+
+      &:first-of-type {
+        margin-bottom: 1.25rem;
+
+        @include tablet {
+          margin-bottom: 1rem;
+          @include letter-spacing-rem($font-size-main, 0.06);
+        }
+      }
+
+      &:last-of-type {
+        padding: 0 0.625rem;
+        @include font-size-rem(12);
+        font-style: italic;
+        line-height: 150%;
+        text-align: justify;
+        color: #b2b2b2;
+
+        @include tablet {
+          padding: 0;
+          text-align: left;
+        }
+      }
+    }
+
+    & a {
+      display: inline-block;
+      position: relative;
+      margin-bottom: 1.25rem;
+      padding: 0.813rem 0.938rem;
+      padding-left: 3.75rem;
+      font-family: $secondary-font-family;
+      line-height: 115%;
+      @include letter-spacing-rem($font-size-main, 0.06);
+      color: #545454;
+      background: #f1cdb3;
+      border-radius: 0.563rem;
+      transition: 0.2s linear;
+
+      &:hover,
+      &:focus {
+        background-color: #fddcc4;
+      }
+
+      &:before {
+        content: "";
+        position: absolute;
+        width: 30px;
+        height: 23px;
+        top: 50%;
+        left: 15px;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+        background-image: url("../../../assets/icons/icon-credit-card.svg");
+        background-repeat: no-repeat;
+      }
+
+      @include tablet {
+        padding: 0.625rem 0.938rem;
+        padding-left: 3.75rem;
+        @include font-size-rem(20);
+        @include letter-spacing-rem($font-size-card-h3, 0.06);
+      }
+    }
+
+    @include tablet {
+      align-items: flex-start;
+      margin-bottom: 2.5rem;
+    }
+
+    @include desktop {
+      margin-bottom: 0;
+    }
+  }
+}
