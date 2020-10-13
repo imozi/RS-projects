@@ -1,0 +1,37 @@
+$breakpoint-desktop: 1280px;
+$breakpoint-tablet: 768px;
+$breakpoint-mobile: 320px;
+
+$main-font-family: "Arial", "Helvetica", sans-serif;
+$secondary-font-family: "Georgia", "Arial", "Helvetica", sans-serif;
+$font-size-desktop-h1-4: 2.188;
+$font-size-mobile-h1-4: 1.563;
+$font-size-mobile-btn: 1.063;
+$font-size-tablet-h1-4: 2.75;
+$font-size-card-h3: 1.25;
+$font-size-main: 0.938; 
+$font-size-basic: 16; 
+
+
+$main-font-color: #4c4c4c;
+$main-font-h-color: #545454;
+$secont-fonts-color: #cdcdcd;
+$secont-font-h-color: #ffffff;
+$color-btn-primary: #f1cdb3;
+$color-btn-primary-hover: #fddcc4;
+$color-btn-secondary-border: #f1cdb3;
+$color-btn-secondary-hover:#fddcc4;
+$color-menu-link: #cdcdcd;
+$color-menu-link-hover: #fafafa;
+
+$section-background: #f6f6f6;
+$animal-card-background: #fafafa;
+$first-color-gradient: #5b483a;
+$second-color-gradient: #262425;
+$noise-gradient-pattern: "../../../assets/images/noise_transparent.png"; 
+
+$gradient-main: url($noise-gradient-pattern),
+    radial-gradient(100% 215.42% at 0% 0%, $first-color-gradient 0%, $second-color-gradient 100%), #211f20;
+
+$gradient-footer: url("../../../assets/images/noise_transparent.png"),
+    radial-gradient(110.67% 538.64% at 5.73% 50%, #513d2f 0%, #1a1a1c 100%), #211f20;

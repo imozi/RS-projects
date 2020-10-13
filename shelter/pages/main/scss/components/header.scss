@@ -1,0 +1,34 @@
+.header {
+  position: absolute;
+  width: 100%;
+  margin-top: 1.938rem;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+
+    &.container {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  &__logo {
+    margin-right: auto;
+  }
+
+  &__main-nav {
+    margin-top: 0.438rem;
+    margin-right: 2.688rem;
+
+    @include tablet {
+      margin: 0;
+      margin-top: -0.313rem;
+    }
+  }
+
+  @include desktop {
+    margin-top: 3.813rem;
+  }
+
+}

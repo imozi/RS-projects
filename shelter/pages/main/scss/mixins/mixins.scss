@@ -1,0 +1,32 @@
+@mixin list-reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@mixin font-size-rem ($font) {
+  font-size: $font / $font-size-basic + rem;
+}
+
+@mixin letter-spacing-rem($font, $percent) {
+  letter-spacing: $font * $percent + rem;
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin min-width ($min-width) {
+  @media (max-width: $min-width) {
+    @content;
+  }
+}
+

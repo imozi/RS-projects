@@ -1,0 +1,35 @@
+.btn {
+  display: inline-block;
+  padding: 0.9375rem 2.8125rem;
+  font-family: $secondary-font-family;
+  font-style: normal;
+  font-weight: normal;
+  @include font-size-rem(17);
+  @include letter-spacing-rem($font-size-mobile-btn, 0.06);
+  line-height: 130%;
+  color: #292929;
+  letter-spacing: 0.06em;
+  border-radius: 6.25rem;
+  transition: 0.2s linear;
+
+  &--primary {
+    background-color: $color-btn-primary;
+  }
+
+  &--primary:hover,
+  &--primary:focus {
+    background-color: $color-btn-primary-hover;
+  }
+
+  &--secondary {
+    padding: 0.8125rem 2.6875rem;
+    border: 2px solid $color-btn-secondary-border;
+    background-color: transparent;
+  }
+
+  &--secondary:hover,
+  &--secondary:focus {
+    background-color: $color-btn-secondary-hover;
+    border: 2px solid transparent;
+  }
+}

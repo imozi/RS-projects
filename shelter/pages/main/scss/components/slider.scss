@@ -1,0 +1,86 @@
+.slider {
+  display: flex;
+  flex-direction: column;
+  max-width: 270px;
+
+  &__wrapper {
+    display: flex;
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+
+    @include tablet {
+      max-width: 580px;
+      z-index: 2;
+    }
+
+    @include desktop {
+      max-width: 1030px;
+      padding: 1.25rem;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    min-width: 184px;
+
+    @include tablet {
+      position: absolute;
+      min-width: 100%;
+      top: 48%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+  }
+
+  &__btn {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 52px;
+    height: 52px;
+    border: 0.125rem solid #f1cdb3;
+    border-radius: 6.25rem;
+    background-color: transparent;
+    transition: 0.2s linear;
+    cursor: pointer;
+    outline: none;
+
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
+      border: 0.125rem solid transparent;
+      background-color: #fddcc4;
+    }
+    &:disabled {
+      border: 0.125rem solid #cdcdcd;
+    }
+
+    &:disabled svg {
+      fill: #cdcdcd;
+    }
+  }
+
+  @include tablet {
+    position: relative;
+    width: 708px;
+    max-width: 708px;
+    align-items: center;
+
+    &__item {
+      margin-right: 40px;
+
+      @include desktop {
+        margin-right: 90px;
+      }
+    }
+  }
+
+  @include desktop {
+    width: 100%;
+    max-width: 100%;
+  }
+}
