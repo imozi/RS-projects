@@ -9,7 +9,8 @@
     transition: 0.2s linear;
 
     & svg {
-      stroke: #f1cdb3;
+      transition: 0.2s linear;
+      stroke: #000000;
     }
 
     @include tablet {
@@ -80,9 +81,18 @@
     color: $color-menu-link;
     transition: color 0.2s linear;
 
+    @include tablet {
+      @include font-size-rem(15);
+      color: $main-font-h-color;
+    }
+
     &:hover:not(.main-nav__link--active),
     &:focus:not(.main-nav__link--active) {
       color: $color-menu-link-hover;
+
+      @include tablet {
+        color: $second-color-logo;
+      }
     }
 
     &--active {
@@ -102,10 +112,10 @@
           bottom: -7px;
         }
       }
-    }
 
-    @include tablet {
-      @include font-size-rem(15);
+      @include tablet {
+        color: $second-color-logo;
+      }
     }
   }
 }

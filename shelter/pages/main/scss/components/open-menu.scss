@@ -1,0 +1,46 @@
+.open-menu {
+  & .header {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  & .main-nav__btn {
+    transform: rotate(-90deg);
+  }
+
+  & .main-nav__list {
+    transform: translateX(0px);
+  }
+
+  & .slider {
+    z-index: -1;
+
+    @include tablet {
+      z-index: 0;
+    }
+  }
+
+  & .in-addition__description {
+    z-index: -1;
+
+    @include tablet {
+      z-index: 0;
+    }
+  }
+
+  & .footer__contacts {
+    z-index: -1;
+
+    @include tablet {
+      z-index: 0;
+    }
+  }
+
+  & .footer__location {
+    z-index: -1;
+
+    @include tablet {
+      z-index: 0;
+    }
+  }
+}

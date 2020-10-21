@@ -1,0 +1,50 @@
+.open-menu {
+  & .header {
+    height: 100%;
+    overflow: hidden;
+
+    &__logo h1 {
+      color: $secont-fonts-color;
+
+      @include min-width(520px) {
+        color: $main-font-h-color;
+      }
+    }
+
+    &__logo p {
+      color: $secont-fonts-color;
+
+      @include min-width(520px) {
+        color: $second-color-logo;
+      }
+    }
+  }
+
+  & .main-nav__btn {
+    transform: rotate(-90deg);
+
+    & svg {
+      stroke: #ffffff;
+    }
+  }
+
+  & .main-nav__list {
+    transform: translateX(0px);
+  }
+
+  & .footer__contacts {
+    z-index: -1;
+
+    @include tablet {
+      z-index: 0;
+    }
+  }
+
+  & .footer__location {
+    z-index: -1;
+
+    @include tablet {
+      z-index: 0;
+    }
+  }
+}
