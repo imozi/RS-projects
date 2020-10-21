@@ -1,0 +1,54 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 340px;
+
+  &__btn {
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 52px;
+    height: 52px;
+    border: 0.125rem solid #f1cdb3;
+    border-radius: 6.25rem;
+    background-color: transparent;
+    @include font-size-rem(20);
+    @include letter-spacing-rem($font-size-card-h3, 0.06);
+    color: $second-color-logo;
+    transition: 0.2s linear;
+    cursor: pointer;
+    outline: none;
+
+    &:hover:not(:disabled),
+    &:focus:not(:disabled) {
+      border: 0.125rem solid transparent;
+      background-color: #fddcc4;
+    }
+    &:disabled {
+      border: 0.125rem solid #cdcdcd;
+      color: #cdcdcd;
+    }
+
+    &:disabled svg {
+      fill: #cdcdcd;
+    }
+  }
+  
+  &__current-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 52px;
+    height: 52px;
+    background-color: #f1cdb3;
+    border-radius: 6.25rem;
+    font-family: $secondary-font-family;
+    @include font-size-rem(20);
+    @include letter-spacing-rem($font-size-card-h3, 0.06);
+    line-height: 115%;
+    color: $second-color-logo;
+  }
+}

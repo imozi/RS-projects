@@ -1,0 +1,87 @@
+.our-friends {
+  background-color: $section-background;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > h2 {
+      max-width: 400px;
+      margin: 0;
+      margin-bottom: 2.688rem;
+      text-align: center;
+
+      @include tablet {
+        margin-top: 0.125rem;
+        margin-bottom: 1.813rem;
+      }
+
+      @include desktop {
+        margin-bottom: 3.688rem;
+      }
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2.625rem;
+
+    @include tablet {
+      max-width: 580px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+
+    @include desktop {
+      max-width: 100%;
+      justify-content: flex-start;
+      margin-bottom: 3.75rem;
+    }
+  }
+
+  &__item {
+    margin-bottom: 1.875rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    @include tablet {
+      margin-right: 2.5rem;
+
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
+
+      &:nth-last-child(2) {
+        margin-bottom: 0;
+      }
+    }
+
+    @include desktop {
+      &:nth-child(2n) {
+        margin-right: 2.5rem;
+      }
+
+      &:nth-child(4n) {
+        margin-right: 0;
+      }
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      &:nth-last-child(3) {
+        margin-bottom: 0;
+      }
+
+      &:nth-last-child(4) {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
