@@ -1,22 +1,29 @@
 .open-menu {
+  position: fixed;
+  width: 100%;
+
   & .header {
     height: 100%;
     overflow: hidden;
 
-    &__logo h1 {
-      color: $secont-fonts-color;
-
-      @include min-width(520px) {
-        color: $main-font-h-color;
+    &__wrapper {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(41, 41, 41, 0.6);
       }
     }
 
-    &__logo p {
-      color: $secont-fonts-color;
+    &__logo h1 {
+      color: #f1cdb3;
+    }
 
-      @include min-width(520px) {
-        color: $second-color-logo;
-      }
+    &__logo p {
+      color: #ffffff;
     }
   }
 
@@ -30,21 +37,5 @@
 
   & .main-nav__list {
     transform: translateX(0px);
-  }
-
-  & .footer__contacts {
-    z-index: -1;
-
-    @include tablet {
-      z-index: 0;
-    }
-  }
-
-  & .footer__location {
-    z-index: -1;
-
-    @include tablet {
-      z-index: 0;
-    }
   }
 }

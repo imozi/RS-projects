@@ -2,7 +2,6 @@
   position: absolute;
   width: 100%;
   height: auto;
-  max-width: 320px;
   right: 0;
   padding-top: 1.938rem;
   overflow: hidden;
@@ -10,7 +9,7 @@
   &__wrapper {
     display: flex;
     align-items: center;
-    z-index: 2;
+    z-index: 1;
 
     &.container {
       padding-top: 0;
@@ -20,30 +19,18 @@
 
   &__logo {
     margin-right: auto;
-    z-index: 1;
+    z-index: 2;
   }
 
   &__main-nav {
     margin-top: 0.438rem;
     margin-right: 2.688rem;
-    z-index: 0;
+    z-index: 1;
 
     @include tablet {
       margin: 0;
       margin-top: -0.313rem;
     }
-  }
-
-  @include min-width(375px) {
-    max-width: 85.334%;
-  }
-
-  @include min-width(376px) {
-    max-width: 100%;
-  }
-
-  @include tablet {
-    max-width: 100%;
   }
 
   @include desktop {
