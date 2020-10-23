@@ -1,7 +1,21 @@
 .open-menu {
+  position: fixed;
+
   & .header {
     height: 100%;
     overflow: hidden;
+
+    &__wrapper {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background-color: rgba(41, 41, 41, 0.6);
+      }
+    }
   }
 
   & .main-nav__btn {
@@ -10,37 +24,5 @@
 
   & .main-nav__list {
     transform: translateX(0px);
-  }
-
-  & .slider {
-    z-index: -1;
-
-    @include tablet {
-      z-index: 0;
-    }
-  }
-
-  & .in-addition__description {
-    z-index: -1;
-
-    @include tablet {
-      z-index: 0;
-    }
-  }
-
-  & .footer__contacts {
-    z-index: -1;
-
-    @include tablet {
-      z-index: 0;
-    }
-  }
-
-  & .footer__location {
-    z-index: -1;
-
-    @include tablet {
-      z-index: 0;
-    }
   }
 }

@@ -14,7 +14,7 @@
 
     getTemplateCard(animal, id) {
       return `
-    <article class="swiper-slide slider__item animal-card" data-key="${id}">
+    <article class="swiper-slide slider__item animal-card animal-card--animate-fade" data-key="${id}">
       <div class="animal-card__photo">
         <img src="${animal.img}" alt="${animal.name}">
       </div>
@@ -102,9 +102,9 @@
       modalPetCloseBtn.addEventListener("click", onClickCloseBtn);
     }
 
-    renderCards() {
-      const card = this.animals.reduce((a, e, i) => {
-        return (a += this.getTemplateCard(e, i));
+    renderCards(animals = this.animals) {
+      const card = animals.reduce((a, e, i) => {
+        return (a += this.getTemplateCard(e, e.id || i));
       }, ``);
 
       this.container.insertAdjacentHTML("afterBegin", card);
@@ -123,10 +123,26 @@
 
   const url =
     "https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/markups/level-2/shelter/pets.json";
-  const animals = await fetch(url).then((res) => res.json());
+  const data = await fetch(url).then((res) => res.json());
+  const animals = (() => {
+    let temp = [];
+
+    for (let i = 0; i < 6; i++) {
+      const newData = data;
+
+      for (let j = data.length; j > 0; j--) {
+        const index = Math.floor(Math.random() * j);
+        const randomElement = newData.splice(index, 1)[0];
+        newData.push(randomElement);
+      }
+
+      temp = [...temp, ...newData];
+    }
+
+    return temp;
+  })();
 
   const animalCard = new AnimalCard({ animals: animals, container: animalsContainer });
-
   animalCard.renderCards();
   animalCard.onClickCardGetInfo();
 

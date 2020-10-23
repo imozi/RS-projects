@@ -32,7 +32,20 @@
     &:hover,
     &:focus {
       background-color: #ffffff;
-      box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
     }
+  }
+
+  &--animate-fade {
+    animation: fade 0.5s ease-in-out;
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

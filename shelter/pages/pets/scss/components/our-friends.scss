@@ -28,6 +28,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 2.625rem;
+    min-height: 1365px;
 
     @include tablet {
       max-width: 580px;
@@ -38,6 +39,7 @@
 
     @include desktop {
       max-width: 100%;
+      min-height: 900px;
       justify-content: flex-start;
       margin-bottom: 3.75rem;
     }
