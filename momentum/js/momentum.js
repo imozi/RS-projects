@@ -3,11 +3,11 @@ class Momentum {
     this.app = document.querySelector("#app");
     this.currentImagesIndex = 0;
     this.isNewHour = false;
-    this.#setTime();
-    this.#setDate();
+    this.setTime();
+    this.setDate();
   }
 
-  #getTemplateBackgroundImages(src, alt, autor) {
+  getTemplateBackgroundImages(src, alt, autor) {
     return `
     <div class="image">
       <img src=${src} alt=${alt} data-autor=${autor}>
@@ -17,9 +17,9 @@ class Momentum {
     `;
   }
 
-  #setTime() {
+  setTime() {
     const date = new Date();
-    setTimeout(this.#setTime.bind(this), 1000);
+    setTimeout(this.setTime.bind(this), 1000);
 
     const insertZero = (num) => {
       return (parseInt(num, 10) < 10 ? "0" : "") + num;
@@ -38,7 +38,7 @@ class Momentum {
     };
   }
 
-  #setDate() {
+  setDate() {
     const date = new Date();
 
     const switchWeek = (num) => {
@@ -97,7 +97,7 @@ class Momentum {
     };
   }
 
-  async #setQuote() {
+  async setQuote() {
     const url = `https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=en`;
     const quote = await fetch(url).then((res) => res.json());
 
@@ -107,7 +107,7 @@ class Momentum {
     };
   }
 
-  async #setWeather(city) {
+  async setWeather(city) {
     const API_TOKEN = "ad57c0934c818ea476b502f087218105";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=en&appid=${API_TOKEN}&units=metric`;
     const weather = await fetch(url).then((res) => res.json());
@@ -123,7 +123,7 @@ class Momentum {
     };
   }
 
-  async #setImage() {
+  async setImage() {
     const getImages = async (query, i) => {
       const API_TOKEN = "roKBADOLV1DtnnRTTXUg7VPxVeUMBF8c2iLiEleU1gA";
       const url = `https://api.unsplash.com/search/photos?query=${query}&orientation=landscape&page=${i}&per_page=6&client_id=${API_TOKEN}`;
@@ -144,7 +144,7 @@ class Momentum {
     };
   }
 
-  #getImage() {
+  getImage() {
     const segmentOfTheDay = (hours) => {
       hours = parseInt(hours);
 
@@ -165,18 +165,18 @@ class Momentum {
     return this.images[segmentOfTheDay(this.time.hours)].results[this.currentImagesIndex];
   }
 
-  #switchBackgroundImagesNewHour() {
-    setTimeout(this.#switchBackgroundImagesNewHour.bind(this), 1000);
+  switchBackgroundImagesNewHour() {
+    setTimeout(this.switchBackgroundImagesNewHour.bind(this), 1000);
 
     if (this.isNewHour) {
       this.currentImagesIndex++;
       this.isNewHour = false;
-      this.#renderBackgroundImages();
+      this.renderBackgroundImages();
     }
   }
 
-  #renderBackgroundImages() {
-    const image = this.#getImage();
+  renderBackgroundImages() {
+    const image = this.getImage();
     const isImages = document.querySelector(".image");
 
     if (isImages) {
@@ -188,7 +188,7 @@ class Momentum {
       return;
     }
 
-    const template = this.#getTemplateBackgroundImages(
+    const template = this.getTemplateBackgroundImages(
       image.urls.full,
       image.description,
       image.user.name
@@ -209,9 +209,9 @@ class Momentum {
   }
 
   async render() {
-    await this.#setImage();
-    this.#renderBackgroundImages();
-    this.#switchBackgroundImagesNewHour();
+    await this.setImage();
+    this.renderBackgroundImages();
+    this.switchBackgroundImagesNewHour();
   }
 }
 
