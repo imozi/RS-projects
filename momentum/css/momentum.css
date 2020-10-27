@@ -357,7 +357,7 @@ html {
 
 body {
   position: relative;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 1.5rem;
   font-weight: 300;
   color: #ffffff;
@@ -414,8 +414,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: 0.3s linear;
-  opacity: 1;
+  animation: fade-img 0.5s linear;
 }
 
 .image--load img {
@@ -483,14 +482,15 @@ img {
   left: 50%;
   top: 10%;
   transform: translateX(-50%);
-  animation: fade 0.3s linear;
+  animation: fade 0.2s linear;
 }
 
 .time {
+  width: 100%;
   margin-bottom: 0.5rem;
   padding: 1rem;
   font-size: 12vw;
-  font-weight: 500;
+  font-weight: 600;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 1rem;
   text-align: center;
@@ -499,29 +499,11 @@ img {
 }
 
 .time__wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
 }
 
 .time span {
-  display: block;
-  margin-right: 1rem;
-}
-
-.time__hours {
-  font-size: 15vw;
-}
-
-.time__min {
-  font-weight: normal;
-}
-
-.time__sec {
-  font-size: 10vw;
-  font-weight: 100;
-  width: 15%;
+  display: inline-block;
 }
 
 .date {
@@ -614,7 +596,7 @@ img {
   padding: 0.5rem;
   width: 100%;
   font-family: inherit;
-  font-size: 5vw;
+  font-size: 3.5vw;
   font-weight: 300;
   text-align: center;
   color: #ffffff;
@@ -653,6 +635,7 @@ img {
 }
 
 .weather__btn {
+  position: relative;
   display: inline-block;
   padding: 1rem 1.5rem;
   border: none;
@@ -689,9 +672,25 @@ img {
   transform: translateY(-50%) rotate(180deg);
 }
 
+.weather--load .weather__btn {
+  color: transparent;
+}
+
+.weather--load .weather__btn::before {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-family: "FontAwesome";
+  content: "\f1ce";
+  color: #ffffff;
+  animation: loader 1s linear infinite;
+  transform: translate(-50%, -50%);
+}
+
 .quote {
+  width: 100%;
   margin: 0;
-  padding: 2rem;
+  padding: 1.5rem;
   margin-bottom: 0.5rem;
   font-size: 3.5vw;
   background-color: rgba(0, 0, 0, 0.4);
@@ -745,6 +744,14 @@ img {
   content: "\f01e";
 }
 
+.quote__btn:hover {
+  transform: translateY(-50%) rotate(360deg);
+}
+
+.quote__btn--load {
+  animation: loader 1s linear infinite;
+}
+
 @media (min-width: 500px) {
   .weather__wrapper {
     width: 85%;
@@ -790,14 +797,6 @@ img {
 @media (min-width: 580px) {
   .time {
     font-size: 7rem;
-  }
-
-  .time__hours {
-    font-size: 8.5rem;
-  }
-
-  .time__sec {
-    font-size: 6rem;
   }
 
   .date {
@@ -888,16 +887,10 @@ img {
   }
 
   .time {
+    width: auto;
     margin-bottom: 0;
     font-size: 10rem;
-  }
-
-  .time__hours {
-    font-size: 11.5rem;
-  }
-
-  .time__sec {
-    font-size: 9rem;
+    font-weight: normal;
   }
 
   .date {
@@ -926,6 +919,7 @@ img {
   }
 
   .weather__btn {
+    position: relative;
     margin: 0 1rem;
     font-size: 1.2rem;
   }
@@ -946,6 +940,17 @@ img {
   }
 }
 
+@keyframes fade-img {
+  0% {
+    opacity: 0.4;
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
 @keyframes weather-open {
   0% {
     height: 0;
@@ -953,5 +958,15 @@ img {
 
   100% {
     height: auto;
+  }
+}
+
+@keyframes loader {
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translateY(-50%) rotate(360deg);
   }
 }
