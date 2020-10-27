@@ -1,8 +1,10 @@
 class Momentum {
   constructor(app) {
     this.app = app;
-    this.startIndexImage = 0;
+    this.indexImage = 0;
     this.isNewHour = false;
+    this.isLoadFullImages = false;
+    this.successLoad = 0;
     this.city = localStorage.getItem("city") ? localStorage.getItem("city") : "";
     this.setTime();
     this.setDate();
@@ -103,6 +105,27 @@ class Momentum {
     };
   }
 
+  getImage() {
+    const segmentOfTheDay = (hours) => {
+      hours = parseInt(hours);
+
+      if (hours === 0) hours = 24;
+
+      switch (true) {
+        case hours >= 6 && hours < 12:
+          return "morning";
+        case hours >= 12 && hours < 18:
+          return "afternoon";
+        case hours >= 18 && hours < 24:
+          return "evening";
+        case hours === 24 || hours < 6:
+          return "night";
+      }
+    };
+
+    return this.images[segmentOfTheDay(this.time.hours)].results[this.indexImage];
+  }
+
   setTime() {
     const date = new Date();
     setTimeout(this.setTime.bind(this), 1000);
@@ -184,13 +207,16 @@ class Momentum {
   }
 
   async setQuote() {
-    
-    const url = "https://api.allorigins.win/raw?url=https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru";
+    const url =
+      "https://api.allorigins.win/raw?url=https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru";
     const quote = await fetch(url).then((res) => res.text());
 
+    const regexText = "<quoteText>(.*)</quoteText>";
+    const regexAuthor = "<quoteAuthor>(.*)</quoteAuthor>";
+
     this.quote = {
-      quoteText: quote.match(/(?<=<quoteText>)(.+?)(?=<\/quoteText>)/g)[0],
-      quoteAuthor: quote.match(/(?<=<quoteAuthor>)(.+?)(?=<\/quoteAuthor>)/g)[0],
+      quoteText: quote.match(regexText)[1],
+      quoteAuthor: quote.match(regexAuthor)[1],
     };
   }
 
@@ -224,7 +250,7 @@ class Momentum {
     };
 
     const randomIntFromOneToSix = () => {
-      return Math.floor(Math.random() * 6 + 1);
+      return Math.floor(Math.random() * 24 + 1);
     };
 
     this.images = {
@@ -235,39 +261,40 @@ class Momentum {
     };
   }
 
-  setFullImages() {
-    this.images.full = [
+  preloadFullImages() {
+    const onLoad = this.getEventListenerContent().onLoadImages;
+    const fullImages = [
       ...this.images.morning.results,
       ...this.images.afternoon.results,
       ...this.images.evening.results,
       ...this.images.night.results,
     ];
+    this.images.full = [];
+
+    fullImages.map((e) => {
+      const img = new Image();
+      img.src = e.urls.full;
+      img.alt = e.description;
+      img.dataset.autor = e.user.name;
+      img.dataset.id = e.id;
+      img.onload = onLoad(fullImages.length);
+
+      this.images.full.push(img);
+    });
+  }
+
+  checkIsLoadFullImages() {
+    if (this.isLoadFullImages) {
+      this.app.classList.remove("app--load");
+      return;
+    }
+
+    setTimeout(this.checkIsLoadFullImages.bind(this), 1000);
   }
 
   setCurrentIndexImageFromFull() {
     const idImage = document.querySelector(".image img").dataset.id;
-    this.images.currentIndexImageFromFull = this.images.full.findIndex((e) => e.id === idImage);
-  }
-
-  getImage() {
-    const segmentOfTheDay = (hours) => {
-      hours = parseInt(hours);
-
-      if (hours === 0) hours = 24;
-
-      switch (true) {
-        case hours >= 6 && hours < 12:
-          return "morning";
-        case hours >= 12 && hours < 18:
-          return "afternoon";
-        case hours >= 18 && hours < 24:
-          return "evening";
-        case hours === 24 || hours < 6:
-          return "night";
-      }
-    };
-
-    return this.images[segmentOfTheDay(this.time.hours)].results[this.startIndexImage];
+    this.indexImage = this.images.full.findIndex((e) => e.dataset.id === idImage);
   }
 
   switchBackgroundImagesNewHour() {
@@ -281,55 +308,15 @@ class Momentum {
   }
 
   showPrevImage() {
-    const image = document.querySelector(".image img");
-    let index = this.images.currentIndexImageFromFull;
-
-    image.parentNode.classList.add("image--load");
-
-    const onLoadImages = () => {
-      image.parentNode.classList.remove("image--load");
-    };
-
-    index = (index - 1) % this.images.full.length;
-
-    if (index < 0) index = this.images.full.length - 1;
-
-    image.src = this.images.full[index].urls.full;
-    image.alt = this.images.full[index].description;
-    image.dataset.autor = this.images.full[index].user.name;
-    image.dataset.id = this.images.full[index].id;
-
-    if (!image.dataset.load) {
-      console.log("tut");
-    }
-
-    this.setCurrentIndexImageFromFull();
-
-    image.addEventListener("load", onLoadImages);
+    this.indexImage = (this.indexImage - 1) % this.images.full.length;
+    if (this.indexImage < 0) this.indexImage = 23;
+    this.renderBackgroundImages();
   }
 
   showNextImage() {
-    const image = document.querySelector(".image img");
-    let index = this.images.currentIndexImageFromFull;
-
-    image.parentNode.classList.add("image--load");
-
-    const onLoadImages = () => {
-      image.parentNode.classList.remove("image--load");
-      image.dataset.load = false;
-    };
-
-    index = (index + 1) % this.images.full.length;
-
-    if (index > 23) index = 0;
-
-    image.src = this.images.full[index].urls.full;
-    image.alt = this.images.full[index].description;
-    image.dataset.autor = this.images.full[index].user.name;
-    image.dataset.id = this.images.full[index].id;
-
-    this.setCurrentIndexImageFromFull();
-    image.addEventListener("load", onLoadImages);
+    this.indexImage = (this.indexImage + 1) % this.images.full.length;
+    if (this.indexImage > 23) this.indexImage = 0;
+    this.renderBackgroundImages();
   }
 
   renderBackgroundImages() {
@@ -337,12 +324,8 @@ class Momentum {
     const isImages = document.querySelector(".image");
 
     if (isImages) {
-      const img = isImages.querySelector("img");
-      img.src = image.urls.full;
-      img.alt = image.description;
-      img.dataset.autor = image.user.name;
-      img.dataset.id = image.id;
-
+      isImages.querySelector(".image img").remove();
+      isImages.prepend(this.images.full[this.indexImage]);
       return;
     }
 
@@ -367,12 +350,6 @@ class Momentum {
       }
     };
 
-    const onLoadImage = () => {
-      this.app.classList.remove("app--load");
-      document.querySelector(".image").style.opacity = 1;
-    };
-
-    document.querySelector(".image img").addEventListener("load", onLoadImage);
     this.app.addEventListener("click", onClickBtnBackgroundImages);
   }
 
@@ -395,6 +372,7 @@ class Momentum {
 
       if (input.value === this.weather.error && input.dataset.old === undefined) {
         input.value = "Укажите Город";
+        localStorage.removeItem("city");
       }
 
       if (this.weather.error && input.dataset.old) {
@@ -440,12 +418,14 @@ class Momentum {
     const onKeyUpWeatherInput = () => {
       const input = document.querySelector(".weather input");
       input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1).toLowerCase();
-      this.city = input.value;
-      localStorage.setItem("city", this.city);
+      this.city = input.value.trim();
     };
 
     const onClickWeatherBtn = async (evt) => {
       if (evt.target.classList.contains("weather__btn")) {
+        document.querySelector(".weather").classList.add("weather--load");
+
+        localStorage.setItem("city", this.city);
         await this.setWeather(this.city);
         const weatherElement = document.querySelector(".weather");
 
@@ -485,6 +465,8 @@ class Momentum {
         ).textContent = `${this.weather.wind} м/с`;
         weatherElement.querySelector(".weather__btn").textContent = "Узнать погоду в другом городе";
       }
+
+      document.querySelector(".weather").classList.remove("weather--load");
     };
 
     const onClickWeatherTitle = (evt) => {
@@ -496,6 +478,27 @@ class Momentum {
       }
     };
 
+    const onClickQueoteBtn = async (evt) => {
+      if (evt.target.classList.contains("quote__btn")) {
+        evt.target.classList.add("quote__btn--load");
+        await this.setQuote();
+        const queote = document.querySelector(".quote");
+
+        queote.querySelector(".quote > p").textContent = this.quote.quoteText;
+        queote.querySelector("footer p").textContent = this.quote.quoteAuthor;
+
+        evt.target.classList.remove("quote__btn--load");
+      }
+    };
+
+    const onLoadImages = (length) => {
+      this.successLoad++;
+
+      if (this.successLoad === length) {
+        this.isLoadFullImages = true;
+      }
+    };
+
     return {
       resetInputValue,
       onFocusInput,
@@ -503,6 +506,8 @@ class Momentum {
       onKeyUpWeatherInput,
       onClickWeatherBtn,
       onClickWeatherTitle,
+      onClickQueoteBtn,
+      onLoadImages,
     };
   }
 
@@ -534,6 +539,7 @@ class Momentum {
     this.app.insertAdjacentHTML("beforeend", contentTemplate);
     this.app.addEventListener("click", events.onClickWeatherBtn);
     this.app.addEventListener("click", events.onClickWeatherTitle);
+    this.app.addEventListener("click", events.onClickQueoteBtn);
 
     document.querySelector(".weather input").addEventListener("focus", events.onFocusInput);
     document.querySelector(".weather input").addEventListener("blur", events.onBlurInput);
@@ -543,9 +549,12 @@ class Momentum {
   }
 
   async render() {
+    this.app.classList.add("app--load");
+
     await this.setImage();
+    this.preloadFullImages();
+    this.checkIsLoadFullImages();
     this.renderBackgroundImages();
-    this.setFullImages();
     this.setCurrentIndexImageFromFull();
     this.switchBackgroundImagesNewHour();
     this.renderContent();
