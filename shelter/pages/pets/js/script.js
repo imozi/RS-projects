@@ -281,7 +281,7 @@
       const newAnimals = [];
       const oldItems = this.container.querySelectorAll(".our-friends__item");
 
-      oldItems.forEach(e => e.remove());
+      oldItems.forEach((e) => e.remove());
 
       for (
         var i = (this.currentPage - 1) * this.quantityItem;
@@ -309,8 +309,8 @@
   const url =
     "https://raw.githubusercontent.com/rolling-scopes-school/tasks/master/tasks/markups/level-2/shelter/pets.json";
   const data = await fetch(url).then((res) => res.json());
-  const animals = (() => {
-    let temp = [];
+  const uniqueAnimals = () => {
+    let newRandomAnimals = [];
 
     for (let i = 0; i < 6; i++) {
       const newData = data;
@@ -318,15 +318,72 @@
       for (let j = data.length; j > 0; j--) {
         const index = Math.floor(Math.random() * j);
         const randomElement = newData.splice(index, 1)[0];
+        randomElement.id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
         newData.push(randomElement);
       }
 
-      temp = [...temp, ...newData];
+      newRandomAnimals = [...newRandomAnimals, ...newData];
     }
 
-    return temp;
-  })();
+    const unique = (animals) => {
+      let uniqueAnimals = [];
+      const length = animals.length;
 
+      for (let i = 0; i < length / 8; i++) {
+        const uniqueStepList = [];
+        for (j = 0; j < animals.length; j++) {
+          if (uniqueStepList.length >= 8) {
+            break;
+          }
+          const isUnique = !uniqueStepList.some((e) => {
+            return e.id === animals[j].id;
+          });
+          if (isUnique) {
+            uniqueStepList.push(animals[j]);
+            animals.splice(j, 1);
+            j--;
+          }
+        }
+        uniqueAnimals = [...uniqueAnimals, ...uniqueStepList];
+      }
+      animals = uniqueAnimals;
+
+      animals = uniqueRecursively(animals);
+
+      return animals;
+    };
+
+    const uniqueRecursively = (animals) => {
+      const length = animals.length;
+
+      for (let i = 0; i < length / 6; i++) {
+        const stepList = animals.slice(i * 6, i * 6 + 6);
+
+        for (let j = 0; j < 6; j++) {
+          const duplicatedItem = stepList.find((e, i) => {
+            return e.id === stepList[j].id && i !== j;
+          });
+
+          if (duplicatedItem !== undefined) {
+            const ind = i * 6 + j;
+            const jnd = Math.trunc(ind / 8);
+
+            animals.splice(jnd * 8, 0, animals.splice(ind, 1)[0]);
+
+            uniqueRecursively(animals);
+          }
+        }
+      }
+
+      return animals;
+    };
+
+    newRandomAnimals = unique(newRandomAnimals);
+
+    return newRandomAnimals;
+  };
+
+  const animals = uniqueAnimals();
 
   const pagination = new Pagination({
     animals: animals,
