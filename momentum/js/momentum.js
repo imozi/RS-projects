@@ -184,12 +184,15 @@ class Momentum {
   }
 
   async setQuote() {
-    const url = `http://78.157.255.173:8080/https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru`;
+    
+    const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://api.allorigins.win/raw?callback=myFunc&url=https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru')}`;
     const quote = await fetch(url).then((res) => res.json());
 
+    console.log(quote.contents);
+
     this.quote = {
-      quoteText: quote.quoteText,
-      quoteAuthor: quote.quoteAuthor,
+      quoteText: quote.contents.match(/(?<=<quoteText>)(.+?)(?=<\/quoteText>)/g)[0],
+      quoteAuthor: quote.contents.match(/(?<=<quoteAuthor>)(.+?)(?=<\/quoteAuthor>)/g)[0],
     };
   }
 
