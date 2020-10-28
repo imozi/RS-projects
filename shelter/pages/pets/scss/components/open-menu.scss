@@ -2,7 +2,12 @@
   position: fixed;
   width: 100%;
 
+  & .main {
+    padding-top: 0;
+  }
+
   & .header {
+    position: static;
     height: 100%;
     overflow: hidden;
 
@@ -15,6 +20,7 @@
         bottom: 0;
         right: 0;
         background-color: rgba(41, 41, 41, 0.6);
+        cursor: pointer;
       }
     }
 

@@ -14,7 +14,7 @@
 
     getTemplateCard(animal, id) {
       return `
-    <article class="swiper-slide slider__item animal-card animal-card--animate-fade" data-key="${id}">
+    <article class="swiper-slide slider__item animal-card animal-card--animate-fade" data-id="${id}">
       <div class="animal-card__photo">
         <img src="${animal.img}" alt="${animal.name}">
       </div>
@@ -24,7 +24,7 @@
     `;
     }
     getTemplateModal(id) {
-      const animal = this.animals[id];
+      const animal = this.animals.find(e => e.id === id);
 
       return `
       <div class="modal-pet">
@@ -61,9 +61,9 @@
         ) {
           evt.preventDefault();
           const idCard =
-            evt.target.dataset.key ||
-            evt.target.parentNode.dataset.key ||
-            evt.target.parentNode.parentNode.dataset.key;
+            evt.target.dataset.id ||
+            evt.target.parentNode.dataset.id ||
+            evt.target.parentNode.parentNode.dataset.id;
 
           this.renderModal(idCard);
         }
@@ -103,11 +103,11 @@
     }
 
     renderCards(animals = this.animals) {
-      const card = animals.reduce((a, e, i) => {
-        return (a += this.getTemplateCard(e, e.id || i));
+      const cards = animals.reduce((a, e) => {
+        return (a += this.getTemplateCard(e, e.id));
       }, ``);
 
-      this.container.insertAdjacentHTML("afterBegin", card);
+      this.container.insertAdjacentHTML("afterBegin", cards);
     }
 
     renderModal(id) {
@@ -255,6 +255,16 @@
     }
   };
 
+  const onClickMenuOverlay = (evt) => {
+    if (evt.target.classList.contains("header__wrapper") && body.classList.contains("open-menu")) {
+      body.classList.remove("open-menu");
+      header.classList.add("header--height-100");
+      menuList.classList.remove("main-nav__list--slide-in");
+      menuList.classList.add("main-nav__list--slide-out");
+    }
+  };
+
   menuBtn.addEventListener("click", onClickBtn);
+  header.addEventListener("click", onClickMenuOverlay);
   window.addEventListener("resize", onResizeWindow);
 })();
