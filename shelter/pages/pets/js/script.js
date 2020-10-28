@@ -101,11 +101,11 @@
     }
 
     renderCards(animals = this.animals) {
-      const card = animals.reduce((a, e, i) => {
-        return (a += this.getTemplateCard(e, e.id || i));
+      const cards = animals.reduce((a, e, i) => {
+        return (a += this.getTemplateCard(e, i));
       }, ``);
 
-      this.container.insertAdjacentHTML("afterBegin", card);
+      this.container.insertAdjacentHTML("afterBegin", cards);
     }
 
     renderModal(id) {
@@ -427,6 +427,16 @@
     }
   };
 
+  const onClickMenuOverlay = (evt) => {
+    if (evt.target.classList.contains("header__wrapper") && body.classList.contains("open-menu")) {
+      body.classList.remove("open-menu");
+      header.classList.add("header--height-100");
+      menuList.classList.remove("main-nav__list--slide-in");
+      menuList.classList.add("main-nav__list--slide-out");
+    }
+  }
+
   menuBtn.addEventListener("click", onClickBtn);
+  header.addEventListener("click", onClickMenuOverlay);
   window.addEventListener("resize", onResizeWindow);
 })();
