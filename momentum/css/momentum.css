@@ -539,8 +539,8 @@ img {
   width: 100%;
   font-family: inherit;
   text-align: center;
-  font-size: 4vw;
-  font-weight: 400;
+  font-size: 5vw;
+  font-weight: 600;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
   z-index: 1;
@@ -575,7 +575,7 @@ img {
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
 }
 
 .weather__description {
@@ -589,14 +589,14 @@ img {
 }
 
 .weather__description p {
-  font-size: 3.5vw;
+  font-size: 4.4vw;
 }
 
 .weather input {
   padding: 0.5rem;
   width: 100%;
   font-family: inherit;
-  font-size: 3.5vw;
+  font-size: 1.6rem;
   font-weight: 300;
   text-align: center;
   color: #ffffff;
@@ -619,18 +619,19 @@ img {
 .weather__temp,
 .weather__humidity,
 .weather__wind-speed {
+  position: relative;
   display: flex;
   justify-content: space-between;
   margin: 0;
   margin-bottom: 1.5rem;
   width: 80%;
-  font-size: 3.5vw;
+  font-size: 4.4vw;
 }
 
 .weather__temp span:last-of-type,
 .weather__humidity span:last-of-type,
 .weather__wind-speed span:last-of-type {
-  font-size: 4.5vw;
+  font-size: 4.8vw;
   font-weight: 500;
 }
 
@@ -641,7 +642,7 @@ img {
   border: none;
   border-radius: 0.5rem;
   font-weight: 500;
-  font-size: 3vw;
+  font-size: 4vw;
   text-transform: uppercase;
   color: #ffffff;
   background-color: #56ccf2;
@@ -686,6 +687,39 @@ img {
   animation: loader 1s linear infinite;
   transform: translate(-50%, -50%);
 }
+
+.weather__temp span {
+  padding-left: 15px;
+}
+
+  .weather__temp span:first-child::before {
+    position: absolute;
+    left: 0;
+    font-family: "FontAwesome";
+    content: "\f2c9";
+  }
+
+  .weather__humidity span {
+  padding-left: 15px;
+}
+
+  .weather__humidity span:first-child::before {
+    position: absolute;
+    left: 0;
+    font-family: "FontAwesome";
+    content: "\f043";
+  }
+
+  .weather__wind-speed  span {
+  padding-left: 15px;
+}
+
+  .weather__wind-speed span:first-child::before {
+    position: absolute;
+    left: 0;
+    font-family: "FontAwesome";
+    content: "\f101";
+  }
 
 .quote {
   width: 100%;
@@ -738,18 +772,251 @@ img {
   cursor: pointer;
   outline: none;
   transform: translateY(-50%);
+  transition: 0.2s linear;
 }
 
 .quote__btn::before {
   content: "\f01e";
 }
 
-.quote__btn:hover {
-  transform: translateY(-50%) rotate(360deg);
+.quote__btn:hover,
+.quote__btn:focus {
+  transform: translateY(-50%) rotate(45deg);
 }
 
 .quote__btn--load {
   animation: loader 1s linear infinite;
+}
+
+.greeting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-grow: 1;
+  margin: 0;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 4.5vw;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+}
+
+.greeting p {
+  margin: 0;
+}
+
+.greeting input {
+  display: inline-block;
+  outline: none;
+  padding: 0.5rem;
+  min-width: 30px;
+  max-width: 51%;
+  font-weight: inherit;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  transition: 0.1s linear;
+}
+
+.greeting input:hover,
+.greeting input:focus {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.greeting input::placeholder {
+  color: #ffffff;
+}
+
+.greeting--no-name input {
+  font-weight: 300;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.target {
+  position: relative;
+  width: 100%;
+  flex-grow: 1;
+  margin: 0;
+  padding: 1.5rem;
+  margin-bottom: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 1rem;
+}
+
+.target__title {
+  position: absolute;
+  width: 100%;
+  margin: 0;
+  padding: 1rem;
+  top: 0;
+  left: 0;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.target__title h2 {
+  margin: 0;
+  font-size: 5vw;
+  font-weight: 600;
+  text-align: center;
+}
+
+.target input {
+  margin-top: 8vw;
+  margin-bottom: 1rem;
+  width: 100%;
+  padding: 0;
+  max-height: 0;
+  font-size: 0;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+  color: #ffffff;
+  transition: 0.2s linear;
+}
+
+.target--addition input {
+  max-height: 30px;
+  font-size: 1.6rem;
+  padding: 0.5rem;
+}
+
+.target input::placeholder {
+  color: #ffffff;
+}
+
+.target__btn-add {
+  position: absolute;
+  font-family: "FontAwesome";
+  right: 1rem;
+  top: 50%;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  border: none;
+  color: inherit;
+  background-color: transparent;
+  transform: translateY(-50%);
+  cursor: pointer;
+  outline: none;
+}
+
+.target__btn-add::before {
+  position: absolute;
+  content: "\f067";
+  top: 50%;
+  left: 50%;
+  font-size: 1.5rem;
+  transition: 0.2s linear;
+  transform: translate(-50%, -50%);
+}
+
+.target__btn-add:hover::before {
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+.target__btn-add:focus::before {
+  transform: translate(-50%, -50%) scale(1.3);
+}
+
+.target__list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
+}
+
+.target__list-item {
+  display: flex;
+  align-items: center;
+  outline: none;
+  padding: 0.5rem;
+}
+
+.target__list-item span {
+  display: block;
+  margin: 0 0.8rem;
+  font-size: 1.6rem;
+  max-width: 62.5vw;
+  cursor: default;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.target__list-item:hover .target__check,
+.target__list-item:focus .target__check,
+.target__list-item:hover .target__delete,
+.target__list-item:focus .target__delete {
+  opacity: 1;
+}
+
+.target__check {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ffffff;
+  border-radius: 0.3rem;
+}
+
+.target__check {
+  position: relative;
+  display: inline-block;
+  font-family: "FontAwesome";
+  font-style: normal;
+  opacity: 0;
+  transition: 0.2s linear;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+.target__check::before {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.target__delete {
+  position: relative;
+  font-family: "FontAwesome";
+  font-style: normal;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: 0.2s linear;
+  cursor: pointer;
+}
+
+.target__delete:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.target__delete::before {
+  position: absolute;
+  font-size: 1.3rem;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.target__list-item--checked span {
+  text-decoration: line-through;
+}
+
+.target__list-item--checked .target__check::before {
+  opacity: 1;
 }
 
 @media (min-width: 500px) {
@@ -792,9 +1059,22 @@ img {
   .weather__btn {
     font-size: 1.5rem;
   }
+
+  .target__title h2 {
+    font-size: 2rem;
+  }
+
+  .target input {
+    margin-top: 3.5rem;
+  }
+
 }
 
 @media (min-width: 580px) {
+  .greeting {
+    font-size: 2.6rem;
+  }
+
   .time {
     font-size: 7rem;
   }
@@ -824,6 +1104,10 @@ img {
 }
 
 @media (min-width: 1200px) {
+  .greeting {
+    font-size: 3rem;
+  }
+
   .time {
     display: flex;
     align-items: center;
@@ -908,8 +1192,8 @@ img {
   .weather__temp,
   .weather__humidity,
   .weather__wind-speed {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
   }
 
   .weather__temp span:last-of-type,
