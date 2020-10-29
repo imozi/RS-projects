@@ -6,6 +6,7 @@ class Momentum {
     this.isLoadFullImages = false;
     this.successLoad = 0;
     this.city = localStorage.getItem("city") ? localStorage.getItem("city") : "";
+    this.userName = localStorage.getItem("name") ? localStorage.getItem("name") : "";
     this.setTime();
     this.setDate();
     this.setQuote();
@@ -14,11 +15,11 @@ class Momentum {
   getTemplateContent() {
     const images = (src, alt, autor, id) => {
       return `
-    <div class="image">
-      <img src=${src} alt=${alt} data-autor=${autor} data-id=${id}>
-      <button class="image__btn image__btn--prev" aria-label="Предыдущее изображение"></button>
-      <button class="image__btn image__btn--next" aria-label="Следующее изображение"></button>
-    </div>
+      <div class="image">
+        <img src=${src} alt=${alt} data-autor=${autor} data-id=${id}>
+        <button class="image__btn image__btn--prev" aria-label="Предыдущее изображение"></button>
+        <button class="image__btn image__btn--next" aria-label="Следующее изображение"></button>
+      </div>
     `;
     };
 
@@ -96,12 +97,68 @@ class Momentum {
     `;
     };
 
+    const greeting = () => {
+
+      const segmentOfTheDay = (hours) => {
+        hours = parseInt(hours);
+
+        if (hours === 0) hours = 24;
+
+        switch (true) {
+          case hours >= 6 && hours < 12:
+            return "Доброе утро";
+          case hours >= 12 && hours < 18:
+            return "Добрый день";
+          case hours >= 18 && hours < 24:
+            return "Добрый вечер";
+          case hours === 24 || hours < 6:
+            return "Доброй ночи";
+        }
+      };
+
+      return `
+      <div class="greeting ${this.userName ? "" : "greeting--no-name"}">
+        <p>${segmentOfTheDay(this.time.hours)},</p>
+        <input class="greeting__name" type="text" name="name" id="name" placeholder="Введите имя" value="${
+          this.userName
+        }">
+      </div>
+      `;
+    };
+
+    const target = (target) => {
+      if (target) {
+        return `<li class="target__list-item">${target}</li>`;
+      } else {
+        return `
+        <div class="target ${localStorage.getItem("targets") ? "" : "target--addition"}">
+          <div class="target__title">
+          <h2>Ваши цели</h2>
+          <button class="target__btn-add" aria-label="Добавить цель"></button>
+          </div>
+          <input type="text" name="target" placeholder="Введите цель">
+          <ul class="target__list">
+          ${
+            localStorage.getItem("targets")
+              ? localStorage.getItem("targets").reduce((a, e) => {
+                  return (a += template.target(e));
+                }, ``)
+              : ""
+          }
+          </ul>
+        </div>
+      `;
+      }
+    };
+
     return {
       images,
       time,
       date,
       weather,
       quote,
+      greeting,
+      target,
     };
   }
 
@@ -382,19 +439,19 @@ class Momentum {
       }
     };
 
-    const onFocusInput = () => {
-      const weatherElement = document.querySelector(".weather");
+    const onFocusWeatherInput = () => {
+      const input = this.app.querySelector(".weather input");
 
       if (this.city) {
-        weatherElement.querySelector(".weather input").dataset.old = this.city;
+        input.dataset.old = this.city;
       }
 
-      weatherElement.querySelector(".weather input").placeholder = "";
-      weatherElement.querySelector(".weather input").value = "";
+      input.placeholder = "";
+      input.value = "";
     };
 
-    const onBlurInput = () => {
-      const input = document.querySelector(".weather input");
+    const onBlurWeatherInput = () => {
+      const input = this.app.querySelector(".weather input");
 
       if (input.dataset.old) {
         input.value = input.dataset.old;
@@ -417,7 +474,7 @@ class Momentum {
 
     const onKeyUpWeatherInput = () => {
       const input = document.querySelector(".weather input");
-      input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1).toLowerCase();
+      input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
       this.city = input.value.trim();
     };
 
@@ -433,8 +490,11 @@ class Momentum {
         setTimeout(resetInputValue, 1000);
 
         if (this.weather.error) {
+          
           weatherElement.querySelector(".weather input").value = this.weather.error;
+          weatherElement.classList.remove("weather--load");
           this.city = "";
+
           if (weatherElement.querySelector(".weather input").dataset.old)
             localStorage.setItem(
               "city",
@@ -488,6 +548,8 @@ class Momentum {
         queote.querySelector("footer p").textContent = this.quote.quoteAuthor;
 
         evt.target.classList.remove("quote__btn--load");
+
+        evt.target.blur();
       }
     };
 
@@ -499,15 +561,82 @@ class Momentum {
       }
     };
 
+    const onFocusGreetingInput = () => {
+      const input = this.app.querySelector(".greeting__name");
+
+      if (this.userName) {
+        input.dataset.old = this.userName;
+      }
+
+      input.placeholder = "";
+      input.value = "";
+    };
+
+    const onBlurGreetingInput = () => {
+      const input = this.app.querySelector(".greeting__name");
+
+      if (
+        !this.userName & !localStorage.getItem("name") & (input.value !== "") ||
+        (input.value !== "") & (localStorage.getItem("name") !== input.value)
+      ) {
+        this.userName = input.value;
+        input.dataset.old = "";
+        localStorage.setItem("name", input.value);
+
+        if (input.parentNode.classList.contains("greeting--no-name")) {
+          input.parentNode.classList.remove("greeting--no-name");
+        }
+        return;
+      }
+
+      if (input.dataset.old) {
+        input.value = input.dataset.old;
+      }
+
+      if (!this.userName.trim()) {
+        input.placeholder = "Введите имя";
+        input.value = "";
+      }
+
+      if (this.userName === this.userName) {
+        input.value = this.userName;
+      }
+    };
+
+    const onKeyupGreetingInput = () => {
+      const input = this.app.querySelector(".greeting__name");
+      input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1).toLowerCase().trim();
+    }
+
+    const onEnterGreetingInput = (evt) => {
+      const input = this.app.querySelector(".greeting__name");
+      const ENTER_KEY = "Enter";
+
+      if (evt.code === ENTER_KEY) {
+        this.userName = input.value;
+        input.dataset.old = "";
+        localStorage.setItem("name", input.value);
+        input.blur();
+
+        if(input.parentNode.classList.contains("greeting--no-name")) {
+          input.parentNode.classList.remove("greeting--no-name");
+        }
+      }
+    }
+
     return {
       resetInputValue,
-      onFocusInput,
-      onBlurInput,
+      onFocusWeatherInput,
+      onBlurWeatherInput,
       onKeyUpWeatherInput,
       onClickWeatherBtn,
       onClickWeatherTitle,
       onClickQueoteBtn,
       onLoadImages,
+      onKeyupGreetingInput,
+      onFocusGreetingInput,
+      onBlurGreetingInput,
+      onEnterGreetingInput,
     };
   }
 
@@ -515,6 +644,8 @@ class Momentum {
     const template = this.getTemplateContent();
     const events = this.getEventListenerContent();
 
+    const Greeting = template.greeting();
+    const Targets = template.target();
     const Time = template.time();
     const Date = template.date();
     const Quote = template.quote();
@@ -529,8 +660,10 @@ class Momentum {
 
     const contentTemplate = `
         <div class="content">
+          ${Greeting}
           ${Time}
           ${Weather}
+          ${Targets}
           ${Date}
           ${Quote}
         </div>
@@ -541,9 +674,15 @@ class Momentum {
     this.app.addEventListener("click", events.onClickWeatherTitle);
     this.app.addEventListener("click", events.onClickQueoteBtn);
 
-    document.querySelector(".weather input").addEventListener("focus", events.onFocusInput);
-    document.querySelector(".weather input").addEventListener("blur", events.onBlurInput);
-    document.querySelector(".weather input").addEventListener("keyup", events.onKeyUpWeatherInput);
+    this.app.querySelector(".weather input").addEventListener("focus", events.onFocusWeatherInput);
+    this.app.querySelector(".weather input").addEventListener("blur", events.onBlurWeatherInput);
+    this.app.querySelector(".weather input").addEventListener("keyup", events.onKeyUpWeatherInput);
+
+    this.app.querySelector(".greeting__name").addEventListener("keyup", events.onKeyupGreetingInput);
+    this.app.querySelector(".greeting__name").addEventListener("focus", events.onFocusGreetingInput);
+    this.app.querySelector(".greeting__name").addEventListener("blur", events.onBlurGreetingInput);
+    this.app.querySelector(".greeting__name").addEventListener("keydown", events.onEnterGreetingInput);
+    
 
     this.reRenderTime();
   }
@@ -558,6 +697,7 @@ class Momentum {
     this.setCurrentIndexImageFromFull();
     this.switchBackgroundImagesNewHour();
     this.renderContent();
+    alert("Пожалуйста пока не проверяйте, немного не успеваю дайте еще день.Спасибо)");
   }
 }
 
