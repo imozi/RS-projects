@@ -1,30 +1,31 @@
-class Momentum {
-  constructor(app) {
-    this.app = app;
-    this.indexImage = 0;
-    this.isNewHour = false;
-    this.isLoadFullImages = false;
-    this.successLoad = 0;
-    this.city = localStorage.getItem("city") ? localStorage.getItem("city") : "";
-    this.userName = localStorage.getItem("name") ? localStorage.getItem("name") : "";
-    this.setTime();
-    this.setDate();
-    this.setQuote();
-  }
+(() => {
+  class Momentum {
+    constructor(app) {
+      this.app = app;
+      this.indexImage = 0;
+      this.isNewHour = false;
+      this.isLoadFullImages = false;
+      this.successLoad = 0;
+      this.city = localStorage.getItem("city") ? localStorage.getItem("city") : "";
+      this.userName = localStorage.getItem("name") ? localStorage.getItem("name") : "";
+      this.setTime();
+      this.setDate();
+      this.setQuote();
+    }
 
-  getTemplateContent() {
-    const images = (src, alt, autor, id) => {
-      return `
+    getTemplateContent() {
+      const images = (src, alt, autor, id) => {
+        return `
       <div class="image">
         <img src=${src} alt=${alt} data-autor=${autor} data-id=${id}>
         <button class="image__btn image__btn--prev" aria-label="Предыдущее изображение"></button>
         <button class="image__btn image__btn--next" aria-label="Следующее изображение"></button>
       </div>
     `;
-    };
+      };
 
-    const time = () => {
-      return `
+      const time = () => {
+        return `
       <div class="time">
         <div class="time__wrapper">
            <span class="time__hours">${this.time.hours} :</span>
@@ -33,10 +34,10 @@ class Momentum {
         </div>
       </div>
     `;
-    };
+      };
 
-    const date = () => {
-      return `
+      const date = () => {
+        return `
       <div class="date">
         <span class="date__dayOfWeek">Сегодня: ${this.date.dayOfWeek},</span>
         <span class="date__day">${this.date.day}</span>
@@ -44,11 +45,11 @@ class Momentum {
         <span class="date__year">${this.date.year}</span>
      </div>
     `;
-    };
+      };
 
-    const weather = (weather) => {
-      return `
-      <div class="weather">
+      const weather = (weather) => {
+        return `
+      <div class="weather" data-content="${localStorage.getItem("city") ? true : false}">
         <h2 class="weather__title">Погода</h2>
         <div class="weather__wrapper">
         <div class="weather__content">
@@ -83,10 +84,10 @@ class Momentum {
         </div> 
       </div>
     `;
-    };
+      };
 
-    const quote = () => {
-      return `
+      const quote = () => {
+        return `
     <blockquote class="quote">
       <p>${this.quote.quoteText}</p>
       <footer>
@@ -95,28 +96,27 @@ class Momentum {
       </footer>
     </blockquote>
     `;
-    };
-
-    const greeting = () => {
-
-      const segmentOfTheDay = (hours) => {
-        hours = parseInt(hours);
-
-        if (hours === 0) hours = 24;
-
-        switch (true) {
-          case hours >= 6 && hours < 12:
-            return "Доброе утро";
-          case hours >= 12 && hours < 18:
-            return "Добрый день";
-          case hours >= 18 && hours < 24:
-            return "Добрый вечер";
-          case hours === 24 || hours < 6:
-            return "Доброй ночи";
-        }
       };
 
-      return `
+      const greeting = () => {
+        const segmentOfTheDay = (hours) => {
+          hours = parseInt(hours);
+
+          if (hours === 0) hours = 24;
+
+          switch (true) {
+            case hours >= 6 && hours < 12:
+              return "Доброе утро";
+            case hours >= 12 && hours < 18:
+              return "Добрый день";
+            case hours >= 18 && hours < 24:
+              return "Добрый вечер";
+            case hours === 24 || hours < 6:
+              return "Доброй ночи";
+          }
+        };
+
+        return `
       <div class="greeting ${this.userName ? "" : "greeting--no-name"}">
         <p>${segmentOfTheDay(this.time.hours)},</p>
         <input class="greeting__name" type="text" name="name" id="name" placeholder="Введите имя" value="${
@@ -124,541 +124,689 @@ class Momentum {
         }">
       </div>
       `;
-    };
+      };
 
-    const target = (target) => {
-      if (target) {
-        return `<li class="target__list-item">${target}</li>`;
-      } else {
-        return `
-        <div class="target ${localStorage.getItem("targets") ? "" : "target--addition"}">
+      const target = (target, i, complited) => {
+        if (target) {
+          return `<li class="target__list-item" tabindex="0" data-key="${i}" data-complited="${complited}"><i class="target__check fas fa-check"></i><span>${target}</span><i class="target__delete fas fa-times"></i></li>`;
+        } else {
+          return `
+        <div class="target ${
+          !localStorage.getItem("targets")
+            ? "target--addition"
+            : JSON.parse(localStorage.getItem("targets")).length === 5
+            ? "target--full"
+            : ""
+        }">
           <div class="target__title">
-          <h2>Ваши цели</h2>
+          <h2>${
+            !localStorage.getItem("targets")
+              ? "Ваша цель"
+              : JSON.parse(localStorage.getItem("targets")).length === 1
+              ? "Ваша цель"
+              : "Ваши цели"
+          }</h2>
           <button class="target__btn-add" aria-label="Добавить цель"></button>
           </div>
           <input type="text" name="target" placeholder="Введите цель">
           <ul class="target__list">
           ${
-            localStorage.getItem("targets")
-              ? localStorage.getItem("targets").reduce((a, e) => {
-                  return (a += template.target(e));
-                }, ``)
+            JSON.parse(localStorage.getItem("targets"))
+              ? JSON.parse(localStorage.getItem("targets"))
+                  .reverse()
+                  .reduce((a, e, i) => {
+                    return (a += this.getTemplateContent().target(e.target, i, e.isComplited));
+                  }, ``)
               : ""
           }
           </ul>
         </div>
       `;
-      }
-    };
-
-    return {
-      images,
-      time,
-      date,
-      weather,
-      quote,
-      greeting,
-      target,
-    };
-  }
-
-  getImage() {
-    const segmentOfTheDay = (hours) => {
-      hours = parseInt(hours);
-
-      if (hours === 0) hours = 24;
-
-      switch (true) {
-        case hours >= 6 && hours < 12:
-          return "morning";
-        case hours >= 12 && hours < 18:
-          return "afternoon";
-        case hours >= 18 && hours < 24:
-          return "evening";
-        case hours === 24 || hours < 6:
-          return "night";
-      }
-    };
-
-    return this.images[segmentOfTheDay(this.time.hours)].results[this.indexImage];
-  }
-
-  setTime() {
-    const date = new Date();
-    setTimeout(this.setTime.bind(this), 1000);
-
-    const insertZero = (num) => {
-      return (parseInt(num, 10) < 10 ? "0" : "") + num;
-    };
-
-    if (this.time) {
-      if (this.time.hours !== insertZero(date.getHours())) {
-        this.isNewHour = true;
-      }
-    }
-
-    this.time = {
-      hours: insertZero(date.getHours()),
-      min: insertZero(date.getMinutes()),
-      sec: insertZero(date.getSeconds()),
-    };
-  }
-
-  setDate() {
-    const date = new Date();
-
-    const switchWeek = (num) => {
-      switch (num) {
-        case 0:
-          return "Воскресенье";
-        case 1:
-          return "Понедельник";
-        case 2:
-          return "Вторник";
-        case 3:
-          return "Среда";
-        case 4:
-          return "Четверг";
-        case 5:
-          return "Пятница";
-        case 6:
-          return "Суббота";
-      }
-    };
-
-    const swithMonth = (num) => {
-      switch (num) {
-        case 0:
-          return "Января";
-        case 1:
-          return "Февраля";
-        case 2:
-          return "Марта";
-        case 3:
-          return "Апреля";
-        case 4:
-          return "Мая";
-        case 5:
-          return "Июня";
-        case 6:
-          return "Июля";
-        case 7:
-          return "Августа";
-        case 8:
-          return "Сентября";
-        case 9:
-          return "Октября";
-        case 10:
-          return "Ноября";
-        case 11:
-          return "Декабря";
-      }
-    };
-
-    this.date = {
-      day: date.getDate(),
-      dayOfWeek: switchWeek(date.getDay()),
-      month: swithMonth(date.getMonth()),
-      year: `${date.getFullYear()}г.`,
-    };
-  }
-
-  async setQuote() {
-    const url =
-      "https://api.allorigins.win/raw?url=https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru";
-    const quote = await fetch(url).then((res) => res.text());
-
-    const regexText = "<quoteText>(.*)</quoteText>";
-    const regexAuthor = "<quoteAuthor>(.*)</quoteAuthor>";
-
-    this.quote = {
-      quoteText: quote.match(regexText)[1],
-      quoteAuthor: quote.match(regexAuthor)[1],
-    };
-  }
-
-  async setWeather(city) {
-    try {
-      const API_TOKEN = "ad57c0934c818ea476b502f087218105";
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=${API_TOKEN}&units=metric`;
-      const weather = await fetch(url).then((res) => res.json());
-
-      this.weather = {
-        description: weather.weather[0].description,
-        icon: `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
-        temp: weather.main.temp,
-        humidity: weather.main.humidity,
-        wind: weather.wind.speed, //Скорость ветра в метр / сек
+        }
       };
-    } catch (err) {
-      this.weather = {
-        error: "Такого города не существует!",
+
+      return {
+        images,
+        time,
+        date,
+        weather,
+        quote,
+        greeting,
+        target,
       };
     }
-  }
 
-  async setImage() {
-    const getImages = async (query, i) => {
-      const API_TOKEN = "roKBADOLV1DtnnRTTXUg7VPxVeUMBF8c2iLiEleU1gA";
-      const url = `https://api.unsplash.com/search/photos?query=${query}&orientation=landscape&page=${i}&per_page=6&client_id=${API_TOKEN}`;
-      const images = await fetch(url).then((res) => res.json());
+    getImage() {
+      const segmentOfTheDay = (hours) => {
+        hours = parseInt(hours);
 
-      return images;
-    };
+        if (hours === 0) hours = 24;
 
-    const randomIntFromOneToSix = () => {
-      return Math.floor(Math.random() * 24 + 1);
-    };
+        switch (true) {
+          case hours >= 6 && hours < 12:
+            return "morning";
+          case hours >= 12 && hours < 18:
+            return "afternoon";
+          case hours >= 18 && hours < 24:
+            return "evening";
+          case hours === 24 || hours < 6:
+            return "night";
+        }
+      };
 
-    this.images = {
-      morning: await getImages("morning", randomIntFromOneToSix()),
-      afternoon: await getImages("afternoon", randomIntFromOneToSix()),
-      evening: await getImages("evening", randomIntFromOneToSix()),
-      night: await getImages("night", randomIntFromOneToSix()),
-    };
-  }
-
-  preloadFullImages() {
-    const onLoad = this.getEventListenerContent().onLoadImages;
-    const fullImages = [
-      ...this.images.morning.results,
-      ...this.images.afternoon.results,
-      ...this.images.evening.results,
-      ...this.images.night.results,
-    ];
-    this.images.full = [];
-
-    fullImages.map((e) => {
-      const img = new Image();
-      img.src = e.urls.full;
-      img.alt = e.description;
-      img.dataset.autor = e.user.name;
-      img.dataset.id = e.id;
-      img.onload = onLoad(fullImages.length);
-
-      this.images.full.push(img);
-    });
-  }
-
-  checkIsLoadFullImages() {
-    if (this.isLoadFullImages) {
-      this.app.classList.remove("app--load");
-      return;
+      return this.images[segmentOfTheDay(this.time.hours)].results[this.indexImage];
     }
 
-    setTimeout(this.checkIsLoadFullImages.bind(this), 1000);
-  }
+    setTime() {
+      const date = new Date();
+      setTimeout(this.setTime.bind(this), 1000);
 
-  setCurrentIndexImageFromFull() {
-    const idImage = document.querySelector(".image img").dataset.id;
-    this.indexImage = this.images.full.findIndex((e) => e.dataset.id === idImage);
-  }
+      const insertZero = (num) => {
+        return (parseInt(num, 10) < 10 ? "0" : "") + num;
+      };
 
-  switchBackgroundImagesNewHour() {
-    setTimeout(this.switchBackgroundImagesNewHour.bind(this), 1000);
+      if (this.time) {
+        if (this.time.hours !== insertZero(date.getHours())) {
+          this.isNewHour = true;
+        }
+      }
 
-    if (this.isNewHour) {
-      this.startIndexImage++;
-      this.isNewHour = false;
-      this.renderBackgroundImages();
-    }
-  }
-
-  showPrevImage() {
-    this.indexImage = (this.indexImage - 1) % this.images.full.length;
-    if (this.indexImage < 0) this.indexImage = 23;
-    this.renderBackgroundImages();
-  }
-
-  showNextImage() {
-    this.indexImage = (this.indexImage + 1) % this.images.full.length;
-    if (this.indexImage > 23) this.indexImage = 0;
-    this.renderBackgroundImages();
-  }
-
-  renderBackgroundImages() {
-    const image = this.getImage();
-    const isImages = document.querySelector(".image");
-
-    if (isImages) {
-      isImages.querySelector(".image img").remove();
-      isImages.prepend(this.images.full[this.indexImage]);
-      return;
+      this.time = {
+        hours: insertZero(date.getHours()),
+        min: insertZero(date.getMinutes()),
+        sec: insertZero(date.getSeconds()),
+      };
     }
 
-    const template = this.getTemplateContent().images(
-      image.urls.full,
-      image.description,
-      image.user.name,
-      image.id
-    );
+    setDate() {
+      const date = new Date();
 
-    this.app.insertAdjacentHTML("beforeend", template);
+      const switchWeek = (num) => {
+        switch (num) {
+          case 0:
+            return "Воскресенье";
+          case 1:
+            return "Понедельник";
+          case 2:
+            return "Вторник";
+          case 3:
+            return "Среда";
+          case 4:
+            return "Четверг";
+          case 5:
+            return "Пятница";
+          case 6:
+            return "Суббота";
+        }
+      };
 
-    const onClickBtnBackgroundImages = (evt) => {
-      if (evt.target.classList.contains("image__btn--prev")) {
-        this.showPrevImage();
-        evt.target.blur();
-      }
+      const swithMonth = (num) => {
+        switch (num) {
+          case 0:
+            return "Января";
+          case 1:
+            return "Февраля";
+          case 2:
+            return "Марта";
+          case 3:
+            return "Апреля";
+          case 4:
+            return "Мая";
+          case 5:
+            return "Июня";
+          case 6:
+            return "Июля";
+          case 7:
+            return "Августа";
+          case 8:
+            return "Сентября";
+          case 9:
+            return "Октября";
+          case 10:
+            return "Ноября";
+          case 11:
+            return "Декабря";
+        }
+      };
 
-      if (evt.target.classList.contains("image__btn--next")) {
-        this.showNextImage();
-        evt.target.blur();
-      }
-    };
-
-    this.app.addEventListener("click", onClickBtnBackgroundImages);
-  }
-
-  reRenderTime() {
-    const time = document.querySelector(".time");
-    setTimeout(this.reRenderTime.bind(this), 1000);
-
-    if (time) {
-      time.querySelector(".time__hours").textContent = `${this.time.hours} :`;
-      time.querySelector(".time__min").textContent = ` ${this.time.min} :`;
-      time.querySelector(".time__sec").textContent = ` ${this.time.sec}`;
-
-      return;
+      this.date = {
+        day: date.getDate(),
+        dayOfWeek: switchWeek(date.getDay()),
+        month: swithMonth(date.getMonth()),
+        year: `${date.getFullYear()}г.`,
+      };
     }
-  }
 
-  getEventListenerContent() {
-    const resetInputValue = () => {
-      const input = document.querySelector(".weather input");
+    async setQuote() {
+      const url =
+        "https://api.allorigins.win/raw?url=https://api.forismatic.com/api/1.0/?method=getQuote&format=json&lang=ru";
+      const quote = await fetch(url).then((res) => res.text());
 
-      if (input.value === this.weather.error && input.dataset.old === undefined) {
-        input.value = "Укажите Город";
-        localStorage.removeItem("city");
+      const regexText = "<quoteText>(.*)</quoteText>";
+      const regexAuthor = "<quoteAuthor>(.*)</quoteAuthor>";
+
+      this.quote = {
+        quoteText: quote.match(regexText)[1],
+        quoteAuthor: quote.match(regexAuthor)[1],
+      };
+    }
+
+    async setWeather(city) {
+      try {
+        const API_TOKEN = "ad57c0934c818ea476b502f087218105";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&lang=ru&appid=${API_TOKEN}&units=metric`;
+        const weather = await fetch(url).then((res) => res.json());
+
+        this.weather = {
+          description:
+            weather.weather[0].description.charAt(0).toUpperCase() +
+            weather.weather[0].description.slice(1),
+          icon: `https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`,
+          temp: weather.main.temp,
+          humidity: weather.main.humidity,
+          wind: weather.wind.speed, //Скорость ветра в метр / сек
+        };
+      } catch (err) {
+        this.weather = {
+          error: "Такого города не существует!",
+        };
       }
+    }
 
-      if (this.weather.error && input.dataset.old) {
-        input.value = input.dataset.old;
-        this.city = input.dataset.old;
-        localStorage.setItem("city", input.value);
-      }
-    };
+    async setImage() {
+      const getImages = async (query, i) => {
+        const API_TOKEN = "roKBADOLV1DtnnRTTXUg7VPxVeUMBF8c2iLiEleU1gA";
+        const url = `https://api.unsplash.com/search/photos?query=${query}&orientation=landscape&page=${i}&per_page=6&client_id=${API_TOKEN}`;
+        const images = await fetch(url).then((res) => res.json());
 
-    const onFocusWeatherInput = () => {
-      const input = this.app.querySelector(".weather input");
+        return images;
+      };
 
-      if (this.city) {
-        input.dataset.old = this.city;
-      }
+      const randomIntFromOneToSix = () => {
+        return Math.floor(Math.random() * 24 + 1);
+      };
 
-      input.placeholder = "";
-      input.value = "";
-    };
+      this.images = {
+        morning: await getImages("morning", randomIntFromOneToSix()),
+        afternoon: await getImages("afternoon", randomIntFromOneToSix()),
+        evening: await getImages("evening", randomIntFromOneToSix()),
+        night: await getImages("night", randomIntFromOneToSix()),
+      };
+    }
 
-    const onBlurWeatherInput = () => {
-      const input = this.app.querySelector(".weather input");
+    preloadFullImages() {
+      const onLoad = this.getEventListenerContent().onLoadImages;
+      const fullImages = [
+        ...this.images.morning.results,
+        ...this.images.afternoon.results,
+        ...this.images.evening.results,
+        ...this.images.night.results,
+      ];
+      this.images.full = [];
 
-      if (input.dataset.old) {
-        input.value = input.dataset.old;
-      }
+      fullImages.map((e) => {
+        const img = new Image();
+        img.src = e.urls.full;
+        img.alt = e.description;
+        img.dataset.autor = e.user.name;
+        img.dataset.id = e.id;
+        img.onload = onLoad(fullImages.length);
 
-      if (!this.city.trim()) {
-        input.placeholder = "Укажите Город";
-        input.value = "";
-      }
+        this.images.full.push(img);
+      });
+    }
 
-      if (this.city === this.city) {
-        input.value = this.city;
+    checkIsLoadFullImages() {
+      if (this.isLoadFullImages) {
+        this.app.classList.remove("app--load");
         return;
       }
 
-      if (!this.city && this.weather.error) {
-        input.value = "Укажите Город";
+      setTimeout(this.checkIsLoadFullImages.bind(this), 1000);
+    }
+
+    setCurrentIndexImageFromFull() {
+      const idImage = document.querySelector(".image img").dataset.id;
+      this.indexImage = this.images.full.findIndex((e) => e.dataset.id === idImage);
+    }
+
+    switchBackgroundImagesNewHour() {
+      setTimeout(this.switchBackgroundImagesNewHour.bind(this), 1000);
+
+      if (this.isNewHour) {
+        this.startIndexImage++;
+        this.isNewHour = false;
+        this.renderBackgroundImages();
       }
-    };
+    }
 
-    const onKeyUpWeatherInput = () => {
-      const input = document.querySelector(".weather input");
-      input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
-      this.city = input.value.trim();
-    };
+    showPrevImage() {
+      this.indexImage = (this.indexImage - 1) % this.images.full.length;
+      if (this.indexImage < 0) this.indexImage = 23;
+      this.renderBackgroundImages();
+    }
 
-    const onClickWeatherBtn = async (evt) => {
-      if (evt.target.classList.contains("weather__btn")) {
-        document.querySelector(".weather").classList.add("weather--load");
+    showNextImage() {
+      this.indexImage = (this.indexImage + 1) % this.images.full.length;
+      if (this.indexImage > 23) this.indexImage = 0;
+      this.renderBackgroundImages();
+    }
 
-        localStorage.setItem("city", this.city);
-        await this.setWeather(this.city);
-        const weatherElement = document.querySelector(".weather");
+    addTarget() {
+      const template = this.getTemplateContent();
+      const input = this.app.querySelector(".target input");
+      const list = this.app.querySelector(".target__list");
 
-        evt.target.blur();
-        setTimeout(resetInputValue, 1000);
+      if (!input.value) {
+        input.placeholder = "Введите цель";
+      } else {
+        const targets = localStorage.getItem("targets")
+          ? JSON.parse(localStorage.getItem("targets"))
+          : [];
+        targets.push({
+          target: input.value,
+          isComplited: false,
+        });
+        const i = targets.findIndex((e) => e.target === input.value);
+        const templateTarget = template.target(input.value, i, false);
 
-        if (this.weather.error) {
-          
-          weatherElement.querySelector(".weather input").value = this.weather.error;
-          weatherElement.classList.remove("weather--load");
-          this.city = "";
+        localStorage.setItem("targets", JSON.stringify(targets));
 
-          if (weatherElement.querySelector(".weather input").dataset.old)
-            localStorage.setItem(
-              "city",
-              weatherElement.querySelector(".weather input").dataset.old
-            );
+        list.parentNode.classList.remove("target--addition");
+        list.insertAdjacentHTML("afterbegin", templateTarget);
+
+        input.value = "";
+        input.placeholder = "Введите цель";
+
+        targets.length >= 2
+          ? (list.parentNode.querySelector(".target__title h2").textContent = "Ваши цели")
+          : (list.parentNode.querySelector(".target__title h2").textContent = "Ваша цель");
+
+        if (targets.length === 5) {
+          list.parentNode.classList.add("target--full");
+        }
+      }
+    }
+
+    renderBackgroundImages() {
+      const image = this.getImage();
+      const isImages = document.querySelector(".image");
+
+      if (isImages) {
+        isImages.querySelector(".image img").remove();
+        isImages.prepend(this.images.full[this.indexImage]);
+        return;
+      }
+
+      const template = this.getTemplateContent().images(
+        image.urls.full,
+        image.description,
+        image.user.name,
+        image.id
+      );
+
+      this.app.insertAdjacentHTML("beforeend", template);
+
+      const onClickBtnBackgroundImages = (evt) => {
+        if (evt.target.classList.contains("image__btn--prev")) {
+          this.showPrevImage();
+          evt.target.blur();
+        }
+
+        if (evt.target.classList.contains("image__btn--next")) {
+          this.showNextImage();
+          evt.target.blur();
+        }
+      };
+
+      this.app.addEventListener("click", onClickBtnBackgroundImages);
+    }
+
+    reRenderTime() {
+      const time = document.querySelector(".time");
+      setTimeout(this.reRenderTime.bind(this), 1000);
+
+      if (time) {
+        time.querySelector(".time__hours").textContent = `${this.time.hours} :`;
+        time.querySelector(".time__min").textContent = ` ${this.time.min} :`;
+        time.querySelector(".time__sec").textContent = ` ${this.time.sec}`;
+
+        return;
+      }
+    }
+
+    getEventListenerContent() {
+      const resetInputValue = () => {
+        const input = document.querySelector(".weather input");
+
+        if (input.value === this.weather.error && input.dataset.old === undefined) {
+          input.value = "Укажите Город";
+          localStorage.removeItem("city");
+        }
+
+        if (this.weather.error && input.dataset.old) {
+          input.value = input.dataset.old;
+          this.city = input.dataset.old;
+          localStorage.setItem("city", input.value);
+        }
+      };
+
+      const onFocusWeatherInput = () => {
+        const input = this.app.querySelector(".weather input");
+
+        if (this.city) {
+          input.dataset.old = this.city;
+        }
+
+        input.placeholder = "";
+        input.value = "";
+      };
+
+      const onBlurWeatherInput = () => {
+        const input = this.app.querySelector(".weather input");
+
+        if (input.dataset.old) {
+          input.value = input.dataset.old;
+        }
+
+        if (!this.city.trim()) {
+          input.placeholder = "Укажите Город";
+          input.value = "";
+        }
+
+        if (this.city === this.city) {
+          input.value = this.city;
           return;
         }
 
-        weatherElement.querySelector(".weather__description img").src = this.weather.icon;
-        weatherElement.querySelector(".weather__description img").alt = this.weather.description;
-        weatherElement.querySelector(
-          ".weather__description p"
-        ).textContent = this.weather.description;
-        weatherElement.querySelector(".weather__temp span:first-of-type").textContent =
-          "Температура:";
-        weatherElement.querySelector(
-          ".weather__temp span:last-of-type"
-        ).textContent = `${Math.floor(this.weather.temp)}${String.fromCharCode(176)}`;
-        weatherElement.querySelector(".weather__humidity span:first-of-type").textContent =
-          "Влажность:";
-        weatherElement.querySelector(
-          ".weather__humidity span:last-of-type"
-        ).textContent = `${this.weather.humidity}%`;
-        weatherElement.querySelector(".weather__wind-speed span:first-of-type").textContent =
-          "Скорость ветра:";
-        weatherElement.querySelector(
-          ".weather__wind-speed span:last-of-type"
-        ).textContent = `${this.weather.wind} м/с`;
-        weatherElement.querySelector(".weather__btn").textContent = "Узнать погоду в другом городе";
-      }
-
-      document.querySelector(".weather").classList.remove("weather--load");
-    };
-
-    const onClickWeatherTitle = (evt) => {
-      if (
-        window.matchMedia("(max-width: 1199px)").matches &&
-        evt.target.classList.contains("weather__title")
-      ) {
-        evt.target.parentNode.classList.toggle("weather--open");
-      }
-    };
-
-    const onClickQueoteBtn = async (evt) => {
-      if (evt.target.classList.contains("quote__btn")) {
-        evt.target.classList.add("quote__btn--load");
-        await this.setQuote();
-        const queote = document.querySelector(".quote");
-
-        queote.querySelector(".quote > p").textContent = this.quote.quoteText;
-        queote.querySelector("footer p").textContent = this.quote.quoteAuthor;
-
-        evt.target.classList.remove("quote__btn--load");
-
-        evt.target.blur();
-      }
-    };
-
-    const onLoadImages = (length) => {
-      this.successLoad++;
-
-      if (this.successLoad === length) {
-        this.isLoadFullImages = true;
-      }
-    };
-
-    const onFocusGreetingInput = () => {
-      const input = this.app.querySelector(".greeting__name");
-
-      if (this.userName) {
-        input.dataset.old = this.userName;
-      }
-
-      input.placeholder = "";
-      input.value = "";
-    };
-
-    const onBlurGreetingInput = () => {
-      const input = this.app.querySelector(".greeting__name");
-
-      if (
-        !this.userName & !localStorage.getItem("name") & (input.value !== "") ||
-        (input.value !== "") & (localStorage.getItem("name") !== input.value)
-      ) {
-        this.userName = input.value;
-        input.dataset.old = "";
-        localStorage.setItem("name", input.value);
-
-        if (input.parentNode.classList.contains("greeting--no-name")) {
-          input.parentNode.classList.remove("greeting--no-name");
+        if (!this.city && this.weather.error) {
+          input.value = "Укажите Город";
         }
-        return;
-      }
+      };
 
-      if (input.dataset.old) {
-        input.value = input.dataset.old;
-      }
+      const onKeyUpWeatherInput = () => {
+        const input = document.querySelector(".weather input");
+        input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1);
+        this.city = input.value.trim();
+      };
 
-      if (!this.userName.trim()) {
-        input.placeholder = "Введите имя";
+      const onClickWeatherBtn = async (evt) => {
+        if (evt.target.classList.contains("weather__btn")) {
+          document.querySelector(".weather").classList.add("weather--load");
+
+          localStorage.setItem("city", this.city);
+          await this.setWeather(this.city);
+          const weatherElement = document.querySelector(".weather");
+
+          evt.target.blur();
+          setTimeout(resetInputValue, 1000);
+
+          if (this.weather.error) {
+            weatherElement.querySelector(".weather input").value = this.weather.error;
+            weatherElement.classList.remove("weather--load");
+            this.city = "";
+
+            if (weatherElement.querySelector(".weather input").dataset.old)
+              localStorage.setItem(
+                "city",
+                weatherElement.querySelector(".weather input").dataset.old
+              );
+            return;
+          }
+
+          weatherElement.querySelector(".weather__description img").src = this.weather.icon;
+          weatherElement.querySelector(".weather__description img").alt = this.weather.description;
+          weatherElement.querySelector(
+            ".weather__description p"
+          ).textContent = this.weather.description;
+          weatherElement.querySelector(".weather__temp span:first-of-type").textContent =
+            "Температура:";
+          weatherElement.querySelector(
+            ".weather__temp span:last-of-type"
+          ).textContent = `${Math.floor(this.weather.temp)}${String.fromCharCode(176)}`;
+          weatherElement.querySelector(".weather__humidity span:first-of-type").textContent =
+            "Влажность:";
+          weatherElement.querySelector(
+            ".weather__humidity span:last-of-type"
+          ).textContent = `${this.weather.humidity}%`;
+          weatherElement.querySelector(".weather__wind-speed span:first-of-type").textContent =
+            "Скорость ветра:";
+          weatherElement.querySelector(
+            ".weather__wind-speed span:last-of-type"
+          ).textContent = `${this.weather.wind} м/с`;
+          weatherElement.querySelector(".weather__btn").textContent =
+            "Узнать погоду в другом городе";
+          weatherElement.dataset.content = true;
+        }
+
+        document.querySelector(".weather").classList.remove("weather--load");
+      };
+
+      const onClickWeatherTitle = (evt) => {
+        if (
+          window.matchMedia("(max-width: 767px)").matches &&
+          evt.target.classList.contains("weather__title")
+        ) {
+          evt.target.parentNode.classList.toggle("weather--open");
+        }
+      };
+
+      const onClickQueoteBtn = async (evt) => {
+        if (evt.target.classList.contains("quote__btn")) {
+          evt.target.classList.add("quote__btn--load");
+          await this.setQuote();
+          const queote = document.querySelector(".quote");
+
+          queote.querySelector(".quote > p").textContent = this.quote.quoteText;
+          queote.querySelector("footer p").textContent = this.quote.quoteAuthor;
+
+          evt.target.classList.remove("quote__btn--load");
+
+          evt.target.blur();
+        }
+      };
+
+      const onLoadImages = (length) => {
+        this.successLoad++;
+
+        if (this.successLoad === length) {
+          this.isLoadFullImages = true;
+        }
+      };
+
+      const onFocusGreetingInput = () => {
+        const input = this.app.querySelector(".greeting__name");
+
+        if (this.userName) {
+          input.dataset.old = this.userName;
+        }
+
+        input.placeholder = "";
         input.value = "";
-      }
+      };
 
-      if (this.userName === this.userName) {
-        input.value = this.userName;
-      }
-    };
+      const onBlurGreetingInput = () => {
+        const input = this.app.querySelector(".greeting__name");
 
-    const onKeyupGreetingInput = () => {
-      const input = this.app.querySelector(".greeting__name");
-      input.value = input.value.charAt(0).toUpperCase() + input.value.slice(1).toLowerCase().trim();
-    }
+        if (
+          !this.userName & !localStorage.getItem("name") & (input.value !== "") ||
+          (input.value !== "") & (localStorage.getItem("name") !== input.value)
+        ) {
+          this.userName = input.value;
+          input.dataset.old = "";
+          localStorage.setItem("name", input.value);
 
-    const onEnterGreetingInput = (evt) => {
-      const input = this.app.querySelector(".greeting__name");
-      const ENTER_KEY = "Enter";
-
-      if (evt.code === ENTER_KEY) {
-        this.userName = input.value;
-        input.dataset.old = "";
-        localStorage.setItem("name", input.value);
-        input.blur();
-
-        if(input.parentNode.classList.contains("greeting--no-name")) {
-          input.parentNode.classList.remove("greeting--no-name");
+          if (input.parentNode.classList.contains("greeting--no-name")) {
+            input.parentNode.classList.remove("greeting--no-name");
+          }
+          return;
         }
+
+        if (input.dataset.old) {
+          input.value = input.dataset.old;
+        }
+
+        if (!this.userName.trim()) {
+          input.placeholder = "Введите имя";
+          input.value = "";
+        }
+
+        if (this.userName === this.userName) {
+          input.value = this.userName;
+        }
+      };
+
+      const onKeyupGreetingInput = () => {
+        const input = this.app.querySelector(".greeting__name");
+        input.value =
+          input.value.charAt(0).toUpperCase() + input.value.slice(1).toLowerCase().trim();
+      };
+
+      const onEnterGreetingInput = (evt) => {
+        const input = this.app.querySelector(".greeting__name");
+        const ENTER_KEY = "Enter";
+
+        if (evt.code === ENTER_KEY) {
+          this.userName = input.value;
+          input.dataset.old = "";
+          localStorage.setItem("name", input.value);
+          input.blur();
+
+          if (input.parentNode.classList.contains("greeting--no-name")) {
+            input.parentNode.classList.remove("greeting--no-name");
+          }
+        }
+      };
+
+      const onFocusTargetInput = () => {
+        const input = this.app.querySelector(".target input");
+        input.placeholder = "";
+      };
+
+      const onBlurTargetInput = () => {
+        this.addTarget();
+      };
+
+      const onEnterTargetInput = (evt) => {
+        const ENTER_KEY = "Enter";
+
+        if (evt.code === ENTER_KEY) {
+          this.addTarget();
+        }
+      };
+
+      const onClickTargetBtn = (evt) => {
+        if (evt.target.classList.contains("target__btn-add")) {
+          const target = this.app.querySelector(".target");
+          target.classList.toggle("target--addition");
+        }
+      };
+
+      const onClickCheckTarget = (evt) => {
+        if (evt.target.classList.contains("target__check")) {
+          const localDate = JSON.parse(localStorage.getItem("targets"));
+
+          if (evt.target.parentNode.dataset.complited === "false") {
+            evt.target.parentNode.dataset.complited = true;
+
+            localDate[evt.target.parentNode.dataset.key].isComplited =
+              evt.target.parentNode.dataset.complited;
+            localStorage.setItem("targets", JSON.stringify(localDate));
+          } else {
+            evt.target.parentNode.dataset.complited = false;
+            localDate[evt.target.parentNode.dataset.key].isComplited =
+              evt.target.parentNode.dataset.complited;
+            localStorage.setItem("targets", JSON.stringify(localDate));
+          }
+
+          evt.target.parentNode.blur();
+        }
+      };
+
+      const onClickDeleteTarget = (evt) => {
+        if (evt.target.classList.contains("target__delete")) {
+          let localDate = JSON.parse(localStorage.getItem("targets"));
+          delete localDate[evt.target.parentNode.dataset.key];
+          localDate = localDate.filter((e) => e !== undefined);
+          evt.target.parentNode.remove();
+
+          const listTagets = this.app.querySelector(".target__list");
+          const listItems = listTagets.querySelectorAll(".target__list-item");
+
+          localDate.forEach((item, ind) => {
+            listItems.forEach((e) => {
+              if (e.querySelector(".target__list-item span").textContent === item.target)
+                e.dataset.key = ind;
+            });
+          });
+
+          localDate.length
+            ? localStorage.setItem("targets", JSON.stringify(localDate))
+            : localStorage.removeItem("targets");
+
+          !localDate.length ? listTagets.parentNode.classList.add("target--addition") : "";
+
+          if (!localDate.length || localDate.length === 1) {
+            listTagets.parentNode.querySelector(".target__title h2").textContent = "Ваша цель";
+          }
+
+          if (!localDate.length) {
+            listTagets.parentNode.classList.add("target--addition");
+            listTagets.parentNode.classList.remove("target--full");
+            return;
+          }
+
+          if (JSON.parse(localStorage.getItem("targets")).length < 5) {
+            listTagets.parentNode.classList.remove("target--full");
+          }
+        }
+      };
+
+      const updateResizeGreetingInput = () =>
+        autosizeInput(this.app.querySelector(".greeting input "));
+
+      return {
+        resetInputValue,
+        onFocusWeatherInput,
+        onBlurWeatherInput,
+        onKeyUpWeatherInput,
+        onClickWeatherBtn,
+        onClickWeatherTitle,
+        onClickQueoteBtn,
+        onLoadImages,
+        onKeyupGreetingInput,
+        onFocusGreetingInput,
+        onBlurGreetingInput,
+        onEnterGreetingInput,
+        onFocusTargetInput,
+        onBlurTargetInput,
+        onClickTargetBtn,
+        onClickCheckTarget,
+        onClickDeleteTarget,
+        onEnterTargetInput,
+        updateResizeGreetingInput,
+      };
+    }
+
+    async renderContent() {
+      const template = this.getTemplateContent();
+      const events = this.getEventListenerContent();
+
+      const Greeting = template.greeting();
+      const Targets = template.target();
+      const Time = template.time();
+      const Date = template.date();
+      const Quote = template.quote();
+      let Weather;
+
+      if (this.city) {
+        await this.setWeather(this.city);
+        Weather = template.weather(this.weather);
+      } else {
+        Weather = template.weather();
       }
-    }
 
-    return {
-      resetInputValue,
-      onFocusWeatherInput,
-      onBlurWeatherInput,
-      onKeyUpWeatherInput,
-      onClickWeatherBtn,
-      onClickWeatherTitle,
-      onClickQueoteBtn,
-      onLoadImages,
-      onKeyupGreetingInput,
-      onFocusGreetingInput,
-      onBlurGreetingInput,
-      onEnterGreetingInput,
-    };
-  }
-
-  async renderContent() {
-    const template = this.getTemplateContent();
-    const events = this.getEventListenerContent();
-
-    const Greeting = template.greeting();
-    const Targets = template.target();
-    const Time = template.time();
-    const Date = template.date();
-    const Quote = template.quote();
-    let Weather;
-
-    if (this.city) {
-      await this.setWeather(this.city);
-      Weather = template.weather(this.weather);
-    } else {
-      Weather = template.weather();
-    }
-
-    const contentTemplate = `
+      const contentTemplates = `
         <div class="content">
           ${Greeting}
           ${Time}
@@ -669,38 +817,59 @@ class Momentum {
         </div>
      `;
 
-    this.app.insertAdjacentHTML("beforeend", contentTemplate);
-    this.app.addEventListener("click", events.onClickWeatherBtn);
-    this.app.addEventListener("click", events.onClickWeatherTitle);
-    this.app.addEventListener("click", events.onClickQueoteBtn);
+      this.app.insertAdjacentHTML("beforeend", contentTemplates);
+      this.app.addEventListener("click", events.onClickWeatherBtn);
+      this.app.addEventListener("click", events.onClickWeatherTitle);
+      this.app.addEventListener("click", events.onClickQueoteBtn);
+      this.app.addEventListener("click", events.onClickTargetBtn);
+      autosizeInput(this.app.querySelector(".greeting input "));
+      this.app
+        .querySelector(".weather input")
+        .addEventListener("focus", events.onFocusWeatherInput);
+      this.app.querySelector(".weather input").addEventListener("blur", events.onBlurWeatherInput);
+      this.app
+        .querySelector(".weather input")
+        .addEventListener("keyup", events.onKeyUpWeatherInput);
 
-    this.app.querySelector(".weather input").addEventListener("focus", events.onFocusWeatherInput);
-    this.app.querySelector(".weather input").addEventListener("blur", events.onBlurWeatherInput);
-    this.app.querySelector(".weather input").addEventListener("keyup", events.onKeyUpWeatherInput);
+      this.app
+        .querySelector(".greeting__name")
+        .addEventListener("keyup", events.onKeyupGreetingInput);
+      this.app
+        .querySelector(".greeting__name")
+        .addEventListener("focus", events.onFocusGreetingInput);
+      this.app
+        .querySelector(".greeting__name")
+        .addEventListener("blur", events.onBlurGreetingInput);
+      this.app
+        .querySelector(".greeting__name")
+        .addEventListener("keydown", events.onEnterGreetingInput);
 
-    this.app.querySelector(".greeting__name").addEventListener("keyup", events.onKeyupGreetingInput);
-    this.app.querySelector(".greeting__name").addEventListener("focus", events.onFocusGreetingInput);
-    this.app.querySelector(".greeting__name").addEventListener("blur", events.onBlurGreetingInput);
-    this.app.querySelector(".greeting__name").addEventListener("keydown", events.onEnterGreetingInput);
-    
+      this.app.querySelector(".target input").addEventListener("focus", events.onFocusTargetInput);
+      this.app.querySelector(".target input").addEventListener("blur", events.onBlurTargetInput);
+      this.app
+        .querySelector(".target input")
+        .addEventListener("keydown", events.onEnterTargetInput);
+      this.app.querySelector(".target__list").addEventListener("click", events.onClickCheckTarget);
+      this.app.querySelector(".target__list").addEventListener("click", events.onClickDeleteTarget);
+      window.addEventListener("resize", events.updateResizeGreetingInput);
 
-    this.reRenderTime();
+      this.reRenderTime();
+    }
+
+    async render() {
+      this.app.classList.add("app--load");
+
+      await this.setImage();
+      this.preloadFullImages();
+      this.checkIsLoadFullImages();
+      this.renderBackgroundImages();
+      this.setCurrentIndexImageFromFull();
+      this.switchBackgroundImagesNewHour();
+      this.renderContent();
+    }
   }
 
-  async render() {
-    this.app.classList.add("app--load");
-
-    await this.setImage();
-    this.preloadFullImages();
-    this.checkIsLoadFullImages();
-    this.renderBackgroundImages();
-    this.setCurrentIndexImageFromFull();
-    this.switchBackgroundImagesNewHour();
-    this.renderContent();
-    alert("Пожалуйста пока не проверяйте, немного не успеваю дайте еще день.Спасибо)");
-  }
-}
-
-const app = document.querySelector("#app");
-const momentum = new Momentum(app);
-momentum.render();
+  const app = document.querySelector("#app");
+  const momentum = new Momentum(app);
+  momentum.render();
+})();
