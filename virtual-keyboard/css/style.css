@@ -67,406 +67,6 @@ body {
   transition: 0.3s linear;
 }
 
-.keyboard > *:nth-child(1) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-}
-
-.keyboard > *:nth-child(2) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 3;
-}
-
-.keyboard > *:nth-child(3) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 5;
-}
-
-.keyboard > *:nth-child(4) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 7;
-}
-
-.keyboard > *:nth-child(5) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 9;
-}
-
-.keyboard > *:nth-child(6) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 11;
-}
-
-.keyboard > *:nth-child(7) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 13;
-}
-
-.keyboard > *:nth-child(8) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 15;
-}
-
-.keyboard > *:nth-child(9) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 17;
-}
-
-.keyboard > *:nth-child(10) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 19;
-}
-
-.keyboard > *:nth-child(11) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 21;
-}
-
-.keyboard > *:nth-child(12) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 23;
-}
-
-.keyboard > *:nth-child(13) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 25;
-}
-
-.keyboard > *:nth-child(14) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 27;
-}
-
-.keyboard > *:nth-child(15) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 29;
-}
-
-.keyboard > *:nth-child(16) {
-  -ms-grid-row: 1;
-  -ms-grid-column: 31;
-}
-
-.keyboard > *:nth-child(17) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 1;
-}
-
-.keyboard > *:nth-child(18) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 3;
-}
-
-.keyboard > *:nth-child(19) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 5;
-}
-
-.keyboard > *:nth-child(20) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 7;
-}
-
-.keyboard > *:nth-child(21) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 9;
-}
-
-.keyboard > *:nth-child(22) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 11;
-}
-
-.keyboard > *:nth-child(23) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 13;
-}
-
-.keyboard > *:nth-child(24) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 15;
-}
-
-.keyboard > *:nth-child(25) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 17;
-}
-
-.keyboard > *:nth-child(26) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 19;
-}
-
-.keyboard > *:nth-child(27) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 21;
-}
-
-.keyboard > *:nth-child(28) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 23;
-}
-
-.keyboard > *:nth-child(29) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 25;
-}
-
-.keyboard > *:nth-child(30) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 27;
-}
-
-.keyboard > *:nth-child(31) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 29;
-}
-
-.keyboard > *:nth-child(32) {
-  -ms-grid-row: 3;
-  -ms-grid-column: 31;
-}
-
-.keyboard > *:nth-child(33) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 1;
-}
-
-.keyboard > *:nth-child(34) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 3;
-}
-
-.keyboard > *:nth-child(35) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 5;
-}
-
-.keyboard > *:nth-child(36) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 7;
-}
-
-.keyboard > *:nth-child(37) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 9;
-}
-
-.keyboard > *:nth-child(38) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 11;
-}
-
-.keyboard > *:nth-child(39) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 13;
-}
-
-.keyboard > *:nth-child(40) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 15;
-}
-
-.keyboard > *:nth-child(41) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 17;
-}
-
-.keyboard > *:nth-child(42) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 19;
-}
-
-.keyboard > *:nth-child(43) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 21;
-}
-
-.keyboard > *:nth-child(44) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 23;
-}
-
-.keyboard > *:nth-child(45) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 25;
-}
-
-.keyboard > *:nth-child(46) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 27;
-}
-
-.keyboard > *:nth-child(47) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 29;
-}
-
-.keyboard > *:nth-child(48) {
-  -ms-grid-row: 5;
-  -ms-grid-column: 31;
-}
-
-.keyboard > *:nth-child(49) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 1;
-}
-
-.keyboard > *:nth-child(50) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 3;
-}
-
-.keyboard > *:nth-child(51) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 5;
-}
-
-.keyboard > *:nth-child(52) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 7;
-}
-
-.keyboard > *:nth-child(53) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 9;
-}
-
-.keyboard > *:nth-child(54) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 11;
-}
-
-.keyboard > *:nth-child(55) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 13;
-}
-
-.keyboard > *:nth-child(56) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 15;
-}
-
-.keyboard > *:nth-child(57) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 17;
-}
-
-.keyboard > *:nth-child(58) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 19;
-}
-
-.keyboard > *:nth-child(59) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 21;
-}
-
-.keyboard > *:nth-child(60) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 23;
-}
-
-.keyboard > *:nth-child(61) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 25;
-}
-
-.keyboard > *:nth-child(62) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 27;
-}
-
-.keyboard > *:nth-child(63) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 29;
-}
-
-.keyboard > *:nth-child(64) {
-  -ms-grid-row: 7;
-  -ms-grid-column: 31;
-}
-
-.keyboard > *:nth-child(65) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 1;
-}
-
-.keyboard > *:nth-child(66) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 3;
-}
-
-.keyboard > *:nth-child(67) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 5;
-}
-
-.keyboard > *:nth-child(68) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 7;
-}
-
-.keyboard > *:nth-child(69) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 9;
-}
-
-.keyboard > *:nth-child(70) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 11;
-}
-
-.keyboard > *:nth-child(71) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 13;
-}
-
-.keyboard > *:nth-child(72) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 15;
-}
-
-.keyboard > *:nth-child(73) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 17;
-}
-
-.keyboard > *:nth-child(74) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 19;
-}
-
-.keyboard > *:nth-child(75) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 21;
-}
-
-.keyboard > *:nth-child(76) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 23;
-}
-
-.keyboard > *:nth-child(77) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 25;
-}
-
-.keyboard > *:nth-child(78) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 27;
-}
-
-.keyboard > *:nth-child(79) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 29;
-}
-
-.keyboard > *:nth-child(80) {
-  -ms-grid-row: 9;
-  -ms-grid-column: 31;
-}
-
 .current-lang {
   position: absolute;
   top: 0;
@@ -505,6 +105,48 @@ body {
   cursor: pointer;
 }
 
+.keyboard .keyboard__sound {
+  position: absolute;
+  margin-top: 20px;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  right: 82px;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 15px 15px;
+}
+
+.keyboard .keyboard__sound[data-enable="true"] {
+  background-image: url("https://www.flaticon.com/svg/static/icons/svg/727/727269.svg");
+}
+
+.keyboard .keyboard__sound[data-enable="false"] {
+  background-image: url("https://www.flaticon.com/svg/static/icons/svg/727/727240.svg");
+}
+
+.keyboard .keyboard__voice {
+  position: absolute;
+  margin-top: 20px;
+  width: 15px;
+  height: 15px;
+  top: 0;
+  right: 102px;
+
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 15px 15px; 
+}
+
+.keyboard .keyboard__voice[data-enable="true"] {
+  background-image: url("https://www.flaticon.com/svg/static/icons/svg/25/25632.svg");
+}
+
+.keyboard .keyboard__voice[data-enable="false"] {
+  background-image: url("https://www.flaticon.com/svg/static/icons/svg/709/709682.svg");
+}
+
 .keyboard button:hover,
 .keyboard button:focus {
   background-color: #e4e4e4;
@@ -513,6 +155,26 @@ body {
 .keyboard button:active {
   -webkit-transform: translateY(2px);
   transform: translateY(2px);
+}
+
+.keyboard .keyboard__sound:hover,
+.keyboard .keyboard__sound:focus {
+  background-color: transparent;
+}
+
+.keyboard .keyboard__sound:active {
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+
+.keyboard .keyboard__voice:hover,
+.keyboard .keyboard__voice:focus {
+  background-color: transparent;
+}
+
+.keyboard .keyboard__voice:active {
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
 }
 
 .keyboard button[data-code="Backspace"] {
@@ -642,4 +304,31 @@ body {
   -ms-grid-column-span: 2;
   grid-column: span 2;
   font-weight: 600;
+}
+
+@media (min-width: 500px) {
+
+.app {
+  padding: 0;
+  padding-top: 50px;
+}
+
+.keyboard button {
+  height: 35px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+}
+
+@media (min-width: 800px) {
+
+.app {
+  padding: 50px;
+}
+
+.keyboard button {
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 }
