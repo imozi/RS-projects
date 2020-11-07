@@ -7,6 +7,10 @@ export default class {
     this.isShift = false;
     this.language = "EN";
     this.isActive = false;
+    this.recorder = new webkitSpeechRecognition() || new SpeechRecognition();
+    this.recorder.interimResults = false;
+    this.isSound = true;
+    this.isVoice = false;
   }
 
   templateButton(button) {
@@ -27,7 +31,9 @@ export default class {
     }, ``);
 
     return `
-    <div class="keyboard" data-enable="${this.isActive}">
+    <div class="keyboard" tabindex="-1" data-enable="${this.isActive}">
+    <button class="keyboard__voice" data-enable="${this.isVoice}"></button>
+    <button class="keyboard__sound" data-enable="${this.isSound}"></button>
     <p class="current-lang">${this.language}</p>
       ${buttons}
     </div>
@@ -156,6 +162,15 @@ export default class {
 
     const onClickBackspace = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "Backspace") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Backspace") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (
           evt.target.dataset.code === "Backspace" &&
           this.keyboardInput.selectionStart !== this.keyboardInput.selectionEnd
@@ -190,6 +205,15 @@ export default class {
 
     const onClickSpace = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "Space") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Space") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (
           evt.target.dataset.code === "Space" &&
           this.cursorPosition === this.keyboardInput.value.length - 1
@@ -213,6 +237,15 @@ export default class {
     };
 
     const onClickEnter = (evt) => {
+      if (this.isSound && evt.target.dataset.code === "Enter") {
+        this.sounds.forEach((e) => {
+          if (e.dataset.name === "Enter") {
+            e.currentTime = 0;
+            e.play();
+          }
+        });
+      }
+
       if (this.isActive) {
         if (evt.target.dataset.code === "Enter" && !this.keyboardInput.value) {
           this.keyboardInput.value = "\n";
@@ -244,6 +277,15 @@ export default class {
 
     const onClickTab = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "Tab") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Tab") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (evt.target.dataset.code === "Tab" && !this.keyboardInput.value) {
           this.keyboardInput.value = "\t";
           this.setCursorPosition();
@@ -274,6 +316,15 @@ export default class {
 
     const onClickSwitchLanguage = (evt) => {
       if (this.isActive) {
+        if (this.isSound && (evt.target.textContent === "RU" || evt.target.textContent === "EN")) {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "switchLanguage") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (evt.target.textContent === "RU") {
           this.container.querySelector(".keyboard").remove();
 
@@ -321,6 +372,22 @@ export default class {
 
     const onClickCapsLockActive = (evt) => {
       if (this.isActive) {
+        if (this.isShift) {
+          return;
+        }
+
+        if (
+          (this.isSound && evt.target.dataset.code === "CapsLock") ||
+          evt.target.dataset.code === "CapsLock"
+        ) {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "CapsLock") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (evt.target.dataset.code === "CapsLock") {
           this.isCapsLock = !this.isCapsLock;
           evt.target.dataset.active = this.isCapsLock;
@@ -335,6 +402,18 @@ export default class {
     const onClickShiftActive = (evt) => {
       if (this.isActive) {
         if (
+          (this.isSound && evt.target.dataset.code === "ShiftLeft") ||
+          evt.target.dataset.code === "ShiftRight"
+        ) {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Shift") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
+        if (
           evt.target.dataset.active === `${this.isShift}` &&
           (evt.target.dataset.code === "ShiftLeft" || evt.target.dataset.code === "ShiftRight")
         ) {
@@ -347,6 +426,20 @@ export default class {
     };
 
     const onKeydownDocument = (evt) => {
+      if (evt.ctrlKey || evt.metaKey) {
+        return;
+      }
+
+      if (
+        evt.shiftKey &&
+        (evt.code === "ArrowUp" ||
+          evt.code === "ArrowDown" ||
+          evt.code === "ArrowLeft" ||
+          evt.code === "ArrowRight")
+      ) {
+        return;
+      }
+
       if (this.isActive) {
         this.fullButtons.forEach((e) => {
           if (e.dataset.code === evt.code) {
@@ -359,6 +452,10 @@ export default class {
     };
 
     const onKeyupDocument = (evt) => {
+      if (evt.ctrlKey || evt.metaKey) {
+        return;
+      }
+
       if (this.isActive) {
         this.fullButtons.forEach((e) => {
           if (e.dataset.code === evt.code) {
@@ -371,6 +468,15 @@ export default class {
 
     const onClickArrowUp = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "ArrowUp") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Arrow") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (evt.target.dataset.code === "ArrowUp") {
           const positionLeft = this.keyboardInput.value
             .slice(0, this.cursorPosition)
@@ -385,6 +491,15 @@ export default class {
 
     const onClickArrowDown = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "ArrowDown") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Arrow") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (evt.target.dataset.code === "ArrowDown") {
           const positionLeft = this.keyboardInput.value
             .slice(this.cursorPosition)
@@ -399,6 +514,15 @@ export default class {
 
     const onClickArrowLeft = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "ArrowLeft") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Arrow") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (this.keyboardInput.selectionStart === 0) {
           return;
         }
@@ -416,6 +540,15 @@ export default class {
 
     const onClickArrowRight = (evt) => {
       if (this.isActive) {
+        if (this.isSound && evt.target.dataset.code === "ArrowRight") {
+          this.sounds.forEach((e) => {
+            if (e.dataset.name === "Arrow") {
+              e.currentTime = 0;
+              e.play();
+            }
+          });
+        }
+
         if (evt.target.dataset.code === "ArrowRight") {
           this.keyboardInput.setSelectionRange(
             this.keyboardInput.selectionStart + 1,
@@ -427,19 +560,89 @@ export default class {
       }
     };
 
-    const preventDefault = (evt) => {
-      evt.preventDefault();
-    };
-
     const onFocusKeyboardInput = () => {
       this.keyboardInput.placeholder = "";
       this.enable();
     };
 
+    const onClickSound = (evt) => {
+      if (evt.target.classList.contains("keyboard__sound")) {
+        this.isSound = !this.isSound;
+        evt.target.dataset.enable = this.isSound;
+        evt.target.blur();
+      }
+    };
+
+    const onClickVoice = (evt) => {
+      if (evt.target.classList.contains("keyboard__voice")) {
+        if (this.isVoice) {
+          this.isVoice = !this.isVoice;
+          evt.target.dataset.enable = this.isVoice;
+          evt.target.blur();
+          this.recorder.removeEventListener("result", this.setVoiceValue);
+          this.recorder.removeEventListener("end", this.recorder.start);
+          this.recorder.stop();
+          this.keyboardInput.focus();
+          return;
+        }
+
+        this.recorder.lang = this.language === "EN" ? "en-US" : "ru-RU";
+        this.recorder.start();
+
+        this.isVoice = !this.isVoice;
+        evt.target.dataset.enable = this.isVoice;
+        evt.target.blur();
+
+        this.keyboardInput.focus();
+
+        this.recorder.addEventListener("result", this.setVoiceValue);
+        this.recorder.addEventListener("end", this.recorder.start);
+      }
+    };
+
+    const preventDefault = (evt) => {
+      if (evt.ctrlKey || evt.metaKey) {
+        return;
+      }
+
+      if (
+        evt.shiftKey &&
+        (evt.code === "ArrowUp" ||
+          evt.code === "ArrowDown" ||
+          evt.code === "ArrowLeft" ||
+          evt.code === "ArrowRight")
+      ) {
+        return;
+      }
+
+      if (this.fullButtons.find((e) => e.dataset.code === evt.code)) {
+        evt.preventDefault();
+      }
+    };
+
     const disableKeyboard = (evt) => {
       if (this.isActive) {
         if (evt.target.dataset.code === "hide") {
+          if (this.isSound) {
+            this.sounds.forEach((e) => {
+              if (e.dataset.name === "Hide") {
+                e.currentTime = 0;
+                e.play();
+              }
+            });
+          }
+
           this.isActive = !this.isActive;
+
+          if (this.isVoice) {
+            const voice = this.container.querySelector(".keyboard__voice");
+            this.isVoice = !this.isVoice;
+            voice.dataset.enable = this.isVoice;
+            voice.blur();
+            this.recorder.removeEventListener("result", this.setVoiceValue);
+            this.recorder.removeEventListener("end", this.recorder.start);
+            this.recorder.stop();
+          }
 
           const keyboard = this.container.querySelector(".keyboard");
           keyboard.dataset.enable = this.isActive;
@@ -469,11 +672,38 @@ export default class {
       onClickArrowRight,
       onFocusKeyboardInput,
       disableKeyboard,
+      onClickSound,
+      onClickVoice,
     };
+  }
+
+  setVoiceValue(evt) {
+    const keyboardInput = document.querySelector(".keyboard-input");
+
+    keyboardInput.value +=
+      Array.from(evt.results)
+        .map((result) => result[0].transcript)
+        .join("") + " ";
+    keyboardInput.setSelectionRange(keyboardInput.value.length, keyboardInput.value.length);
+    keyboardInput.setCursorPosition();
   }
 
   printToDisplay(evt) {
     if (this.isActive) {
+      if (this.isSound) {
+        this.sounds.forEach((e) => {
+          if (e.dataset.name === "keybuttonEN" && this.language === "EN") {
+            e.currentTime = 0;
+            e.play();
+          }
+
+          if (e.dataset.name === "keybuttonRU" && this.language === "RU") {
+            e.currentTime = 0;
+            e.play();
+          }
+        });
+      }
+
       this.keyboardInputValue = this.keyboardInput.value;
       this.setCursorPosition();
 
@@ -483,11 +713,30 @@ export default class {
 
       this.keyboardInput.focus();
       this.keyboardInput.setSelectionRange(this.cursorPosition + 1, this.cursorPosition + 1);
+
+      if (this.isShift) {
+        this.isShift = !this.isShift;
+        this.fullButtons.forEach((e) => {
+          if (e.dataset.code === "ShiftLeft" || e.dataset.code === "ShiftRight") {
+            e.dataset.active = this.isShift;
+          }
+        });
+        this.switchButton();
+      }
     }
   }
 
   enable() {
     if (!this.isActive) {
+      if (this.isSound) {
+        this.sounds.forEach((e) => {
+          if (e.dataset.name === "Show") {
+            e.currentTime = 0;
+            e.play();
+          }
+        });
+      }
+
       this.isActive = !this.isActive;
       const keyboard = this.container.querySelector(".keyboard");
       keyboard.dataset.enable = this.isActive;
@@ -516,16 +765,20 @@ export default class {
     this.container.addEventListener("click", events.onClickArrowLeft.bind(this));
     this.container.addEventListener("click", events.onClickArrowRight.bind(this));
     this.container.addEventListener("click", events.disableKeyboard.bind(this));
+    this.container.addEventListener("click", events.onClickSound.bind(this));
+    this.container.addEventListener("click", events.onClickVoice.bind(this));
 
     document.addEventListener("keyup", events.onKeyupDocument.bind(this));
     document.addEventListener("keydown", events.onKeydownDocument.bind(this));
 
     this.keyboardInput = this.container.querySelector(".keyboard-input");
     this.keyboardInput.addEventListener("click", this.setCursorPosition.bind(this));
-    this.keyboardInput.addEventListener("keyup", events.preventDefault);
-    this.keyboardInput.addEventListener("keydown", events.preventDefault);
     this.keyboardInput.addEventListener("focus", events.onFocusKeyboardInput.bind(this));
 
+    this.keyboardInput.addEventListener("keyup", events.preventDefault);
+    this.keyboardInput.addEventListener("keydown", events.preventDefault);
+
+    this.sounds = document.querySelectorAll("audio");
     this.getButtons();
     events.onClickButtons();
   }
