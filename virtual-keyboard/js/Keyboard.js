@@ -325,7 +325,7 @@ export default class {
           });
         }
 
-        if (evt.target.textContent === "RU") {
+        if (evt.target.textContent === "EN") {
           this.container.querySelector(".keyboard").remove();
 
           if (this.isShift) {
@@ -347,7 +347,7 @@ export default class {
           evt.target.blur();
         }
 
-        if (evt.target.textContent === "EN") {
+        if (evt.target.textContent === "RU") {
           this.container.querySelector(".keyboard").remove();
 
           if (this.isShift) {
@@ -685,7 +685,6 @@ export default class {
         .map((result) => result[0].transcript)
         .join("") + " ";
     keyboardInput.setSelectionRange(keyboardInput.value.length, keyboardInput.value.length);
-    keyboardInput.setCursorPosition();
   }
 
   printToDisplay(evt) {

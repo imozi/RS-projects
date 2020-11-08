@@ -285,7 +285,7 @@ export default [
     code: "ArrowRight",
   },
   {
-    small: "EN",
+    small: "RU",
     shift: null,
     code: "lang",
   },
