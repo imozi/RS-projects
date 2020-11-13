@@ -1,0 +1,67 @@
+@import "../../../assets/scss/mixins.scss";
+
+.menu {
+  padding: 0 1rem;
+  border: 2px solid #eeeeee;
+  border-radius: 0.5rem;
+
+  @include min-width(768px) {
+    padding: 1.5rem 0;
+  }
+
+  &__list {
+    @include list-reset;
+    display: flex;
+    height: 50px;
+
+    @include min-width(768px) {
+      flex-direction: column;
+      height: 100%;
+      width: 50px;
+    }
+
+    & li {
+      display: flex;
+      align-items: center;
+      margin-right: 1.5rem;
+
+      @include min-width(768px) {
+        justify-content: center;
+        align-items: stretch;
+        margin-right: 0;
+        margin-bottom: 1.5rem;
+      }
+
+      &:last-child {
+        margin-left: auto;
+        margin-right: 0;
+
+        @include min-width(768px) {
+          margin: 0;
+          margin-top: auto;
+        }
+      }
+    }
+
+    & button {
+      padding: 0;
+      width: 25px;
+      height: 25px;
+      margin: 0;
+      opacity: 0.4;
+      border: none;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: 25px 25px;
+      background-color: transparent;
+      cursor: pointer;
+      transition: 0.3s linear;
+      outline: none;
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+    }
+  }
+}
