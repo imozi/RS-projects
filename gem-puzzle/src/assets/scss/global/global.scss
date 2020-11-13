@@ -1,0 +1,16 @@
+html {
+  box-sizing: border-box;
+  font-size: 10px;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.6rem;
+  background-color: #fafafa;
+}

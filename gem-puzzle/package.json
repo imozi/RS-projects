@@ -1,0 +1,59 @@
+{
+  "name": "imozi-JS2020Q3",
+  "version": "1.0.0",
+  "description": "RS.school | Gem-puzzle",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.prod.js",
+    "dev": "webpack-dev-server --config webpack.config.dev.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rolling-scopes-school/imozi-JS2020Q3.git"
+  },
+  "keywords": [
+    "RS.shcool, gem-puzzle, js"
+  ],
+  "author": "Zaytsev Oleg <zaytsevoi.90@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rolling-scopes-school/imozi-JS2020Q3/issues"
+  },
+  "homepage": "https://github.com/rolling-scopes-school/imozi-JS2020Q3#readme",
+  "browserslist": {
+    "production": [
+      "> 1%",
+      "last 2 versions",
+      "Firefox ESR"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "autoprefixer": "^10.0.2",
+    "babel-loader": "^8.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "core-js": "^3.7.0",
+    "css-loader": "^5.0.1",
+    "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "imagemin": "^7.0.1",
+    "imagemin-svgo": "^8.0.0",
+    "img-loader": "^3.0.2",
+    "mini-css-extract-plugin": "^1.3.0",
+    "node-sass": "^5.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss": "^8.1.7",
+    "postcss-loader": "^4.0.4",
+    "resolve-url-loader": "^3.1.2",
+    "sass-loader": "^10.0.5",
+    "svg-sprite-loader": "^5.0.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
