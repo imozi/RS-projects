@@ -2,6 +2,7 @@ import style from './style/style.scss';
 import Menu from '../menu';
 import Puzzle from '../puzzle';
 import StatusBar from '../status-bar';
+import Modal from '../modal';
 
 export default class App {
   constructor(container) {
@@ -9,10 +10,11 @@ export default class App {
     this.app = document.createElement('div');
     this.appContainer = document.createElement('div');
     this.appPlayingField = document.createElement('div');
-    this.mode = '3x3' || localStorage.getItem('mode');
+    this.mode = localStorage.getItem('mode') || '3x3';
     this.menu = new Menu();
     this.puzzle = new Puzzle(this.mode);
     this.progress = new StatusBar();
+    this.modal = new Modal();
     this.isPlay = false;
     this.configureApp();
   }
@@ -20,27 +22,55 @@ export default class App {
   getEvents() {
     const onClickApp = (evt) => {
       const { target } = evt;
+      target.blur();
 
       if (target.dataset.name === 'start') {
-        this.appPlayingField.innerHTML = '';
-        this.puzzle.puzzles.forEach((e) => this.appPlayingField.append(e));
         this.menu.events.onClickPlay(target);
-        this.progress.container.style.opacity = 1;
+
+        if (!localStorage.getItem('mode')) {
+          localStorage.setItem('mode', this.mode);
+        }
+
         this.isPlay = !this.isPlay;
+        return;
       }
 
-      if (target.dataset.name === 'reload' && this.isPlay) {
+      if (target.dataset.name === 'stop') {
+        this.menu.events.onClickStop(target);
+        this.isPlay = !this.isPlay;
+        return;
+      }
+
+      if (target.dataset.name === 'reload') {
         this.appPlayingField.innerHTML = '';
         this.menu.events.onClickReload(this.puzzle.generatePuzzles.bind(this.puzzle));
         this.puzzle.puzzles.forEach((e) => this.appPlayingField.append(e));
+        return;
       }
 
-      target.blur();
+      if (target.dataset.name === 'info') {
+        this.app.append(this.modal.info);
+        return;
+      }
+
+      if (target.dataset.name === 'settings') {
+        this.app.append(this.modal.settings);
+      }
     };
 
     return {
       onClickApp,
     };
+  }
+
+  changeMode(evt) {
+    this.appPlayingField.innerHTML = '';
+    this.mode = evt.target.textContent;
+    this.puzzle.mode = this.mode;
+    this.appPlayingField.dataset.mode = this.mode;
+    localStorage.setItem('mode', this.mode);
+    this.puzzle.generatePuzzles();
+    this.puzzle.puzzles.forEach((e) => this.appPlayingField.append(e));
   }
 
   configureApp() {
@@ -58,6 +88,11 @@ export default class App {
     this.appContainer.append(this.appPlayingField);
     this.appContainer.append(this.menu.nav);
 
+    this.modal.settingsItems.forEach((e) => {
+      e.addEventListener('click', this.changeMode.bind(this));
+    });
+
+    this.puzzle.puzzles.forEach((e) => this.appPlayingField.append(e));
     this.app.addEventListener('click', events.onClickApp.bind(this));
   }
 }

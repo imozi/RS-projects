@@ -9,6 +9,7 @@
   transform: translateY(-50%);
 
   &__container {
+    position: relative;
     display: flex;
     flex-direction: column;
 
@@ -23,7 +24,7 @@
     grid-gap: 0.8rem;
     padding: 1rem;
     margin-bottom: 0.5rem;
-      min-height: 438px;
+    min-height: 300px;
     border-radius: 0.5rem;
     border: 2px solid #eeeeee;
     transition: all 0.5s linear;
@@ -69,8 +70,8 @@
     }
 
     & > *:first-child {
-      grid-row: 1 ;
-      grid-column: 1;
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
     }
 
     &::before {

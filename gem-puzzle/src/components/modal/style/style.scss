@@ -1,0 +1,109 @@
+@import "../../../assets/scss/mixins.scss";
+
+.modal {
+  position: absolute;
+  background-color: #ffffff;
+  padding: 1.5rem;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 0.5rem;
+  animation: fade 0.3s linear;
+
+  &__container {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 300;
+
+    & h2 {
+      margin: 0;
+      margin-bottom: 1rem;
+    }
+
+    & p {
+      margin: 0;
+      margin-bottom: 2rem;
+    }
+
+    & ul {
+      @include list-reset;
+      max-width: 260px;
+
+      & li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      & img {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-left: auto;
+      }
+    }
+  }
+
+  &__settings {
+    display: grid;
+    margin-top: 5rem !important;
+    gap: 0.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 1fr;
+    max-width: 100% !important;
+
+    & > *:first-child {
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+    }
+
+    &::before {
+      content: "";
+      padding-bottom: 100%;
+      grid-row: 1 / 1;
+      grid-column: 1 / 1;
+    }
+
+    & li {
+      font-size: 3rem;
+      font-weight: 600;
+      justify-content: center;
+      margin-bottom: 0 !important;
+      border: 2px solid #eeeeee;
+      border-radius: 0.5rem;
+      cursor: pointer;
+    }
+  }
+}
+
+.close__btn {
+  position: absolute;
+  padding: 0;
+  top: 2rem;
+  right: 1.5em;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-size: 10px 10px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  transition: 0.2s linear;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

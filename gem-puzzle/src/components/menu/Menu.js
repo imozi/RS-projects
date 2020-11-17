@@ -1,6 +1,7 @@
 import menuList from './menu-list';
 import style from './style/style.scss';
 import iconStop from '../../assets/img/icon-stop.svg';
+import iconStart from '../../assets/img/icon-start.svg';
 
 export default class Menu {
   constructor() {
@@ -27,6 +28,13 @@ export default class Menu {
       elm.title = 'Приостановить игру';
     };
 
+    const onClickStop = (item) => {
+      const elm = item;
+      elm.style.backgroundImage = `url(${iconStart})`;
+      elm.dataset.name = 'start';
+      elm.title = 'Начать игру';
+    };
+
     const onClickReload = (func) => {
       const reload = func;
       reload();
@@ -34,6 +42,7 @@ export default class Menu {
 
     this.events = {
       onClickPlay,
+      onClickStop,
       onClickReload,
     };
   }
