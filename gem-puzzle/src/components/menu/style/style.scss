@@ -62,6 +62,10 @@
       &:focus {
         opacity: 1;
       }
+
+      &:active {
+        transform: translateY(3px);
+      }
     }
   }
 }

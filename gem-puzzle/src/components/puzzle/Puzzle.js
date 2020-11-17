@@ -44,6 +44,14 @@ export default class Puzzle {
     }
   }
 
+  movePuzzle() {
+    function replace() {
+
+    }
+
+    this.puzzles.forEach((e) => { e.onclick = replace; });
+  }
+
   generatePuzzles() {
     if (localStorage.getItem('save')) {
       this.puzzles = JSON.parse(localStorage.getItem('save')).puzzles;
@@ -66,5 +74,7 @@ export default class Puzzle {
       const j = Math.floor(Math.random() * (i + 1));
       [this.puzzles[i], this.puzzles[j]] = [this.puzzles[j], this.puzzles[i]];
     }
+
+    this.movePuzzle();
   }
 }
