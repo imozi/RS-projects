@@ -5,6 +5,9 @@ import iconReload from '../../assets/img/icon-reload.svg';
 import iconResults from '../../assets/img/icon-results.svg';
 import iconSettings from '../../assets/img/icon-settings.svg';
 import iconInfo from '../../assets/img/icon-info.svg';
+import iconSoundOn from '../../assets/img/icon-sound-on.svg';
+import iconSoundOff from '../../assets/img/icon-sound-off.svg';
+import colors from '../puzzle/colors';
 
 export default [
   {
@@ -20,6 +23,8 @@ export default [
           <li>Результаты: <img src="${iconResults}" alt="Результаты"></li>
           <li>Сменить межим игры: <img src="${iconSettings}" alt="Настройки"></li>
           <li>Описание: <img src="${iconInfo}" alt="Описание игры"></li>
+          <li>Звук включен: <img src="${iconSoundOn}" alt="Звук включен"></li>
+          <li>Звук выключен: <img src="${iconSoundOff}" alt="Звук выключен"></li>
         </ul>
     `,
   },
@@ -29,5 +34,6 @@ export default [
       <hr />
     `,
     mode: ['3x3', '4x4', '5x5', '6x6', '7x7', '8x8'],
+    color: colors,
   },
 ];
