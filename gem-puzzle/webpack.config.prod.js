@@ -113,6 +113,18 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(mp3)/i,
+        exclude: /(node_modules)/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'sound/[name].[ext]',
+            },
+          },
+        ],
+      },
     ],
   },
 };

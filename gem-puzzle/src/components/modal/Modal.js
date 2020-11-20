@@ -37,9 +37,28 @@ export default class Modal {
       this[key] = container;
     }
 
+    if (key[0] === 'complite') {
+      contentContainer.insertAdjacentHTML('beforeend', content[key]);
+      this[key] = container;
+    }
+
+    if (key[0] === 'results') {
+      contentContainer.insertAdjacentHTML('beforeend', content[key]);
+      this[key] = container;
+    }
+
+    if (key[0] === 'save') {
+      contentContainer.insertAdjacentHTML('beforeend', content[key]);
+      this[key] = container;
+    }
+
     if (key[0] === 'settings') {
+      const randomInt = () => Math.floor(Math.random() * 37 + 1);
+      const color = content[key[2]];
+
       content[key[1]].forEach((e) => {
         const item = document.createElement('li');
+        item.style.backgroundColor = color[randomInt()];
         item.textContent = e;
         this.settingsItems.push(item);
         item.onclick = onClickChangeMode;
