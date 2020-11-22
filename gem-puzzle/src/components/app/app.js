@@ -199,7 +199,7 @@ export default class App {
         ? JSON.parse(localStorage.getItem('results'))
         : [];
 
-      if (results.length === 10) {
+      if (results.length <= 10) {
         results.push(state);
         localStorage.setItem('results', JSON.stringify(results));
       } else {
