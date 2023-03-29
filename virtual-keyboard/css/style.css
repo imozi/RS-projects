@@ -71,6 +71,9 @@ body {
   position: absolute;
   top: 0;
   right: 55px;
+  cursor: pointer;
+  padding-left: 5px;
+  border-left: 1px solid #ccc;
 }
 
 .keyboard[data-enable="false"] {
@@ -111,7 +114,7 @@ body {
   width: 15px;
   height: 15px;
   top: 0;
-  right: 82px;
+  right: 90px;
 
   background-repeat: no-repeat;
   background-position: center center;
@@ -119,11 +122,11 @@ body {
 }
 
 .keyboard .keyboard__sound[data-enable="true"] {
-  background-image: url("https://www.flaticon.com/svg/static/icons/svg/727/727269.svg");
+  background-image: url("https://cdn-icons-png.flaticon.com/512/727/727269.png");
 }
 
 .keyboard .keyboard__sound[data-enable="false"] {
-  background-image: url("https://www.flaticon.com/svg/static/icons/svg/727/727240.svg");
+  background-image: url("https://cdn-icons-png.flaticon.com/512/727/727240.png");
 }
 
 .keyboard .keyboard__voice {
@@ -132,7 +135,7 @@ body {
   width: 15px;
   height: 15px;
   top: 0;
-  right: 102px;
+  right: 115px;
 
   background-repeat: no-repeat;
   background-position: center center;
@@ -140,11 +143,11 @@ body {
 }
 
 .keyboard .keyboard__voice[data-enable="true"] {
-  background-image: url("https://www.flaticon.com/svg/static/icons/svg/25/25632.svg");
+  background-image: url("https://cdn-icons-png.flaticon.com/512/25/25682.png");
 }
 
 .keyboard .keyboard__voice[data-enable="false"] {
-  background-image: url("https://www.flaticon.com/svg/static/icons/svg/709/709682.svg");
+  background-image: url("https://cdn-icons-png.flaticon.com/512/5879/5879222.png");
 }
 
 .keyboard button:hover,
@@ -238,12 +241,12 @@ body {
   height: 20px;
   top: 50%;
   left: 50%;
-  background-image: url("https://www.flaticon.com/svg/static/icons/svg/60/60759.svg");
+  background-image: url("https://cdn-icons-png.flaticon.com/512/7124/7124426.png");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 20px 20px;
-  -webkit-transform: translate(-50%, -50%) rotate(180deg);
-  transform: translate(-50%, -50%) rotate(180deg);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .keyboard button[data-code="CapsLock"]::after {

@@ -763,7 +763,7 @@
       };
 
       const updateResizeGreetingInput = () =>
-        autosizeInput(this.app.querySelector(".greeting input "));
+        autosizeInput(this.app.querySelector(".greeting input"));
 
       return {
         resetInputValue,
@@ -822,7 +822,7 @@
       this.app.addEventListener("click", events.onClickWeatherTitle);
       this.app.addEventListener("click", events.onClickQueoteBtn);
       this.app.addEventListener("click", events.onClickTargetBtn);
-      autosizeInput(this.app.querySelector(".greeting input "));
+      autosizeInput(this.app.querySelector(".greeting input"));
       this.app
         .querySelector(".weather input")
         .addEventListener("focus", events.onFocusWeatherInput);
